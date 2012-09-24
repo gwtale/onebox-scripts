@@ -73,11 +73,11 @@ if __name__ == "__main__":
           " -file " + confpath + "config.py"  + \
           " -jobconf mapred.reduce.tasks=1 " + \
          " -jobconf mapred.min.split.size=%d " %(10000*1000*1000) + \
-         " -jobconf mapred.job.name=\"effect_analyse_"+today+"\" "  +\
+         " -jobconf mapred.job.name=\"top_page_change_query_"+today+"\" "  +\
           " -jobconf mapred.job.priority=NORMAL" +\
           " -cacheArchive 'hdfs://n01.dong.shgt.qihoo.net:9000/user/yuebin/suffixtree.tar.gz#suffixtree' "
   print command
   ret = config.run_hadoop_retry(command,OUTPUT_PATH)
   if ret!=0:
-    alert("effect_analyse job faild")
+    alert("output top page_change query job faild")
 
