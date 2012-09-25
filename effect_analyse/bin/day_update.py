@@ -40,7 +40,7 @@ if __name__=="__main__":
     DEBUG_DAY=1
   date=str(datetime.now()-timedelta(DEBUG_DAY)).split(' ')[0].replace('-','')
   remote="/user/yuebin/hadoop/effect_analyse/%s.st" %date
-  local="/home/yuebin/effect_analyse/data/%s.st" %date
+  local="/home/yuebin/onebox-scripts/effect_analyse/data/%s.st" %date
   os.system("rm -rf "+local)
   copy="~/.hadoop/hadoop/bin/hadoop fs -copyToLocal %s %s" %(remote,local)
   print copy

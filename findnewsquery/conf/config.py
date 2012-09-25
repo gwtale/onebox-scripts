@@ -9,7 +9,7 @@ hadoop_timeout = '600000000'
 
 hadoop_home_path = "~/.hadoop/hadoop";
 sendmailpath = "/usr/sbin/sendmail"
-homepath = os.path.abspath('/home/yuebin/findnewsquery')
+homepath = os.path.abspath('/home/yuebin/onebox-scripts/findnewsquery')
 
 keepday = 180
 clusternum = 12
