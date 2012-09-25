@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block header %}
+
+<script src="/static/js/login.js"></script>
+
+{% endblock%}
+{% block title %}Login
+{% endblock%}
+
+{% block content %}
+<header class="hero-unit " align="center">
+    <h1>Welcome to Onebox MARISA System </h1>
+    <p>Matching Algorithm with Recursively Implemented StorAge</p>
+    <center>
+    {% if form.has_errors %}
+    <p>Error</p>
+    {% endif %}
+
+    <form method="post" action=".">{% csrf_token %}
+    <table>
+    <tr><td><label for="id_username">Username:</label></td><td>{{ form.username }}</td></tr>
+    <tr><td><label for="id_password">Password:</label></td><td>{{ form.password }}</td></tr>
+    </table>
+
+    <input class="btn btn-primary btn-large" type="submit" value="Continue" />
+    <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+    </center>
+</header>
+{% endblock %}
