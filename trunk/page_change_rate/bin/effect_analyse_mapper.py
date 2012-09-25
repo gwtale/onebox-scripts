@@ -46,4 +46,6 @@ if __name__=="__main__":
       merge(line)
     except EOFError:
       break
-
+  
+  for i in middle_result:
+    print "%s\t%s\t%s" %(i,middle_result[i]['search'],middle_result[i]['page'])
