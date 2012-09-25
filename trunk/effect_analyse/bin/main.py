@@ -5,14 +5,14 @@ import urllib2
 import os.path
 import sys
 import getopt
-sys.path.append('/home/yuebin/effect_analyse/conf')
+sys.path.append('/home/yuebin/onebox-scripts/effect_analyse/conf')
 import config
 from datetime import *
 
 hadoop_streaming_file = "/home/yuebin/.hadoop/hadoop/contrib/streaming/hadoop-0.20.1.11-fb-streaming.jar"
 hadoop_home_path = "~/.hadoop/hadoop/"
 
-homepath = '/home/yuebin/effect_analyse/'
+homepath = '/home/yuebin/onebox-scripts/effect_analyse/'
 binpath = homepath + '/bin/'
 confpath = homepath + '/conf/'
 datapath = homepath+'/' 
