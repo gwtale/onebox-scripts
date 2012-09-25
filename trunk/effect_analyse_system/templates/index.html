@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block header %}
+
+<script src="/static/js/index.js"></script>
+<input type="hidden" id="during" name="variable" value='{{ during }}'>
+<input type="hidden" id="click_onebox" name="variable" value="{{ click_result.onebox }}">
+<input type="hidden" id="search_onebox" name="variable" value="{{ search_result.onebox }}">
+<input type="hidden" id="click_baidu" name="variable" value="{{ click_result.baidu }}">
+<input type="hidden" id="search_baidu" name="variable" value="{{ search_result.baidu }}">
+<input type="hidden" id="click_google" name="variable" value="{{ click_result.google }}">
+<input type="hidden" id="search_google" name="variable" value="{{ search_result.google }}">
+<input type="hidden" id="click_qss" name="variable" value="{{ click_result.qss }}">
+<input type="hidden" id="search_qss" name="variable" value="{{ search_result.qss }}">
+<input type="hidden" id="click_other" name="variable" value="{{ click_result.other }}">
+<input type="hidden" id="search_other" name="variable" value="{{ search_result.other }}">
+{% endblock%}
+{% block title %}Overview
+{% endblock%}
+
+{% block content %}
+<div id="reportrange" style="margin-top:20px;margin-right:10px" class="btn pull-right">
+        <i class="icon-calendar icon-large"></i>
+        <span>{{current_datetime}}</span> <b class="caret"></b>
+</div>
+<header class="hero-unit day" align="center">
+<div id="chart_total_click" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+
+<header class="hero-unit day" align="center">
+<div id="chart_total_search" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+<header class="hero-unit" align="center">
+<div id="chart_total_click_realtime" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+<header class="hero-unit" align="center">
+<div id="chart_total_search_realtime" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+{% endblock %}

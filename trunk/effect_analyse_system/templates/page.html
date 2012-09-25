@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block header %}
+
+<script src="/static/js/page.js"></script>
+<input type="hidden" id="key_name" name="variable" value='{{ key_name }}'>
+<input type="hidden" id="page_title" name="variable" value='{{ title }}'>
+
+<input type="hidden" id="during" name="variable" value='{{ during }}'>
+<input type="hidden" id="click_onebox" name="variable" value="{{ return_dict.onebox }}">
+<input type="hidden" id="click_baidu" name="variable" value="{{ return_dict.baidu }}">
+<input type="hidden" id="click_google" name="variable" value="{{ return_dict.google }}">
+<input type="hidden" id="click_qss" name="variable" value="{{ return_dict.qss }}">
+<input type="hidden" id="click_other" name="variable" value="{{ return_dict.other }}">
+
+
+<input type="hidden" id="during_hour" name="variable" value='{{ date_range_hour }}'>
+<input type="hidden" id="hour_onebox" name="variable" value="{{ return_hour_dict.onebox }}">
+<input type="hidden" id="hour_baidu" name="variable" value="{{ return_hour_dict.baidu }}">
+<input type="hidden" id="hour_google" name="variable" value="{{ return_hour_dict.google }}">
+<input type="hidden" id="hour_qss" name="variable" value="{{ return_hour_dict.qss }}">
+<input type="hidden" id="hour_other" name="variable" value="{{ return_hour_dict.other }}">
+
+{% endblock%}
+{% block title %}{{title}}
+{% endblock%}
+
+{% block content %}
+<div class="alert alert-success">说明待加入{{key_description}} </div>
+<div id="reportrange" style="margin-top:20px;margin-right:10px" class="btn pull-right">
+        <i class="icon-calendar icon-large"></i>
+        <span>{{current_datetime}}</span> <b class="caret"></b>
+</div>
+<header class="hero-unit day" align="center">
+<div id="chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+<div class="well" align="center">
+	<div  class="input-append bootstrap-timepicker-component span4">
+                    From:<input class="timepicker-1 input-small" id="hour_from" type="text" /><span class="add-on"><i class="icon-time"></i></span>
+                </div>
+                
+<div class="input-append bootstrap-timepicker-component span4">
+                    To:<input class="timepicker-1 input-small" id="hour_to" type="text" /><span class="add-on"><i class="icon-time"></i></span>
+                </div>	
+                <button class="btn" id="change_hour">刷新</button>
+</div>
+<header class="hero-unit hour" align="center">
+
+<div id="chart_hour" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+
+<header class="hero-unit" align="center">
+<div id="chart_baidu_realtime" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+<header class="hero-unit" align="center">
+<div id="chart_google_realtime" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+<header class="hero-unit" align="center">
+<div id="chart_onebox_realtime" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+<header class="hero-unit" align="center">
+<div id="chart_qss_realtime" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+<header class="hero-unit" align="center">
+<div id="chart_other_realtime" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+{% endblock %}
