@@ -16,11 +16,36 @@ import re
 regx=r"[0-9]{1,4}-[0-9]{1,11}|[0-9]{11}|www|com|net|cn|org|http|\b[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"
 skip=re.compile(regx)
 
+all_chinese_str=ur"[\u4e00-\u9fa5]+"
+regx_all_chinese_str=re.compile(all_chinese_str)
+
+chinese_or_number_or_alphabet=ur"[\u4e00-\u9fa5]+|[0-9]+|[a-zA-Z]+"
+regx_chinese_or_number_or_alphabet=re.compile(chinese_or_number_or_alphabet)
+
+version_str=u"[0-9]{1,2}(\.[0-9]{1,2})+"
+regx_version_str=re.compile(version_str)
+
+product_type=ur"[a-zA-Z]{1,100}[0-9]{1,100}"
+regx_product_type=re.compile(product_type)
+
+number_str=ur"[0-9]+"
+regx_number=re.compile(number_str)
+
+alphabet_str=ur"[a-zA-Z]{1,100}"
+regx_alphabet=re.compile(alphabet_str)
+
+number_and_alphabet=ur"[0-9]{1,100}[a-zA-Z]{1,100}"
+regx_number_and_alphabet=re.compile(number_and_alphabet)
+
+query_items_str=ur"[\u4e00-\u9fa5]+|[0-9a-zA-Z]+"
+regx_query_items_str=re.compile(query_items_str)
+
 
 current_session={}
 current_list=[]
 query_click_counts={}
 
+#按行读入,每组存入list中
 def merge(str1):
   global current_list #store whole sessions(between the empty line) 
   global current_session
@@ -31,11 +56,12 @@ def merge(str1):
   else:
     items=str1.split('\t')
     if len(items)!=13:
+      #损坏的数据
       return
     current_session['session_id']=items[0]    
     current_session['date']=items[1]
     try:
-      query_list=re.findall(ur"[\u4e00-\u9fa5]+|[0-9a-zA-Z]+",items[2].decode('utf-8'))
+      query_list=regx_query_items_str.findall(items[2].decode('utf-8'))
     except:
       return 
     current_session['query']=' '.join(query_list)
@@ -53,6 +79,7 @@ def merge(str1):
     current_list.append(current_session)
     current_session={}
 
+#判断list中的每项query是否相同
 def all_the_same(slist):
   current_str=''
   for i in slist:
@@ -62,27 +89,34 @@ def all_the_same(slist):
     elif current_str!=i['query']:
       return False
   return True
+
+#判断传入的字符串是否都为汉字
 def all_chinese(str1):
-  if re.match(ur"[\u4e00-\u9fa5]+",str1.replace(' ','')):
+  if all_chinese_str.match(str1.replace(' ','')):
     return True 
   else:
     return False
+
+
+#求两个字符串的相似度
 def query_similarity(str1,str2):
   if str1=='' or str2 =='':
     return False,0
+  
   try:
-    str1_list=re.findall(ur"[\u4e00-\u9fa5]+|[0-9]+|[a-zA-Z]+",str1)
-    str2_list=re.findall(ur"[\u4e00-\u9fa5]+|[0-9]+|[a-zA-Z]+",str2)
+    str1_list=regx_chinese_or_number_or_alphabet.findall(str1)
+    str2_list=regx_chinese_or_number_or_alphabet.findall(str2)
   except:
+    #含有无法处理的特殊字符
     return False,0
+  
+  #如果不包含任何汉字、数字、字母则为无效query 
   if len(str1_list)==0 or len(str2_list)==0:
     return False,0
-  sint=set()
-  str1=str1.replace(' ','')
-  str2=str2.replace(' ','')
+  
   #去掉有不同版本信息,eg: 3.1.1
-  num_version1=re.search(u"[0-9]{1,2}(\.[0-9]{1,2})+",str1)
-  num_version2=re.search(u"[0-9]{1,2}(\.[0-9]{1,2})+",str2)
+  num_version1=regx_version_str.search(str1)
+  num_version2=regx_version_str.search(str2)
   if num_version1 and num_version2:
     if num_version1.group()==num_version2.group():
       return True,1.11
@@ -92,8 +126,8 @@ def query_similarity(str1,str2):
     return False,0
   
   #去掉有不同型号信息,eg:g4,gt2022
-  version1=re.findall(ur"[a-zA-Z]{1,100}[0-9]{1,100}",str1)
-  version2=re.findall(ur"[a-zA-Z]{1,100}[0-9]{1,100}",str2)
+  version1=regx_product_type.findall(str1)
+  version2=regx_product_type.findall(str2)
   if version1!=[] and version2!=[] and len(version1)==len(version2):
     tmp=version1+version2
     if len(tmp)!=len(set(tmp)):
@@ -102,9 +136,10 @@ def query_similarity(str1,str2):
       return False,-1
   if version1!=[] and version2!=[] and len(version1)!=len(version2):
     return False,-1
-  #去掉所有数字限定但不一样的
-  num_specify1=re.findall(ur"[0-9]+",str1)
-  num_specify2=re.findall(ur"[0-9]+",str2)
+
+  #去掉有数字限定但不一样的
+  num_specify1=regx_number.findall(str1)
+  num_specify2=regx_number.findall(str2)
   if num_specify1!=[] and num_specify2!=[] and len(num_specify1)==len(num_specify2):
     tmp=num_specify1+num_specify2
     if len(tmp)==len(set(tmp)):
@@ -115,9 +150,10 @@ def query_similarity(str1,str2):
     return False,-1
   elif num_specify1==[] and num_specify2!=[]:
     return False,-1
+  
   #去掉有英文限定但不一致的
-  eng_specify1=re.findall(ur"[a-zA-Z]{1,100}",str1)
-  eng_specify2=re.findall(ur"[a-zA-Z]{1,100}",str2)
+  eng_specify1=regx_alphabet.findall(str1)
+  eng_specify2=regx_alphabet.findall(str2)
   if eng_specify1!=[] and eng_specify2!=[] and len(eng_specify1)==len(eng_specify2):
     tmp=eng_specify1+eng_specify2
     if len(tmp)==len(set(tmp)):
@@ -129,9 +165,11 @@ def query_similarity(str1,str2):
     return False,-1
   elif eng_specify1==[] and eng_specify2!=[]:
     return False,-1
+  
+  #数字在前,字母在后的限定
+  numeng_version1=regx_number_and_alphabet.findall(str1)
+  numeng_version2=regx_number_and_alphabet.findall(str2)
 
-  numeng_version1=re.findall(ur"[0-9]{1,100}[a-zA-Z]{1,100}",str1)
-  numeng_version2=re.findall(ur"[0-9]{1,100}[a-zA-Z]{1,100}",str2)
   if numeng_version1!=[] and numeng_version2!=[] and len(numeng_version1)==len(numeng_version2):
     tmp=numeng_version1+numeng_version2
     if len(tmp)!=len(set(tmp)):
@@ -140,7 +178,12 @@ def query_similarity(str1,str2):
       return False,-1
   if numeng_version1!=[] and numeng_version2!=[] and len(numeng_version1)!=len(numeng_version2):
     return False,-1
+ 
+  sint=set()
+  str1=str1.replace(' ','')
+  str2=str2.replace(' ','')
   
+  #计算两个字符串重复度
   if True:
     result=0
     for i in str2_list:
@@ -171,13 +214,14 @@ def query_similarity(str1,str2):
   if len(sint)>1:
     mark= 0.3*max(len(sint)/float(len(str1)),len(sint)/float(len(str2))) + 0.7*min(len(sint)/float(len(str1)),len(sint)/float(len(str2)))
     if mark>0.5001:
-      #print mark
       return True,mark
     else:
       return False,0
   else:
     return False,0
 
+#判断一个string和一个list是否相关,
+#如果相关,返回匹配到的pos,否则返回False
 def query_list_similarity(str1,result_list):
   result=False
   mark=0
@@ -199,6 +243,7 @@ def query_list_similarity(str1,result_list):
   else:
     return False,0
 
+#把每条记录按大致语义切分成groups
 def divide_meaning_groups():
   global current_list
   result_list=[[]]
@@ -212,12 +257,14 @@ def divide_meaning_groups():
       result_list[-1].append(i)
   return result_list 
 
+#dict转list
 def dict_to_list(d_dic):
   tmp=[]
   for t in d_dic:
     tmp.append(d_dic[t])
   return tmp
 
+#从meaning groups中按用户行为拆分成三个list
 def get_se_ck_br(group):
   se=[]
   ck=[]
@@ -241,6 +288,7 @@ def get_se_ck_br(group):
   
   return se,ck,br
 
+#处理meaning groups
 def process_meaning_groups(meaning_group):
   for g in meaning_group:
     se=[]
@@ -250,8 +298,9 @@ def process_meaning_groups(meaning_group):
     se,ck,br=get_se_ck_br(g)
     total=se+ck+br
     total.sort(cmp=lambda x,y: cmp(float(x['date']),float(y['date'])))
-    #print_result(g)
     merge_meaning_groups(total)
+
+#短语限定过滤
 def last_similarity(key,other):
   if not all_chinese(other) and not all_chinese(key):
     return True
@@ -267,6 +316,7 @@ def last_similarity(key,other):
       return False
     else:
       return True
+
 def merge_meaning_groups(total):
   global query_click_counts
 
