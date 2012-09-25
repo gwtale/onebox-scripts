@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load search_template_tag_extra %}
+
+{% block header %}
+
+<script src="/static/js/user_modify.js"></script>
+<script src="/static/js/bootstrap-datepicker.js"></script>
+<link href="/static/css/datepicker.css" rel="stylesheet"  type="text/css"/>
+{% endblock%}
+{% block title %}用户信息修改{% endblock%}
+{% block content %}
+
+    
+
+<div class="row">
+
+<div class="span6">
+    <div class="alert alert-success hide" id="ok"><a href="/userinfo/user_list">修改成功,点击返回</a></div>
+        <div class="alert alert-error hide" id="error"><a href="/userinfo/user_list">修改失败,点击返回</a></div>
+      <div class="form-horizontal" id="modify_user_form">
+        <fieldset>
+          <legend>修改用户信息</legend>
+           <div class="control-group" id="user_id_parent">
+            <label class="control-label" >用户ID</label>
+            <div class="controls docs-input-sizes">
+              <input class="input" id="user_id" type="text" placeholder="" value={{uid}} disabled>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">客户端类型</label>
+            <div class="controls docs-input-sizes">
+              <input class="input" type="text"  id="client_type" placeholder="" value={{user.c_type|type_map}} disabled>
+            </div>
+          </div>
+         
+          <div class="control-group">
+            <label class="control-label">用户名</label>
+            <div class="controls docs-input-sizes">
+	      <input class="input-big" type="text" id="username" value={{user.c_user_name}} >
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label class="control-label">用户密码</label>
+            <div class="controls docs-input-sizes">
+	      <input class="input-big" type="text" value={{user.c_password}} id="password">
+            </div>
+          </div>
+            <div class="control-group">
+            <label class="control-label">真实姓名</label>
+            <div class="controls docs-input-sizes">
+	      <input class="input-big" type="text" id="realname" value={{user.c_real_name}} >
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">公司名称</label>
+            <div class="controls docs-input-sizes">
+	      <input class="input-big" type="text" id="company" value={{user.c_company_name}} >
+            </div>
+          </div>
+                    <div class="control-group">
+            <label class="control-label">Email</label>
+            <div class="controls docs-input-sizes">
+	      <input class="input-big" type="text" id="mail" value={{user.c_email_addr}} >
+            </div>
+          </div>          
+     
+
+     
+                         <div class="control-group">
+            <label class="control-label">身份证号码</label>
+            <div class="controls docs-input-sizes">
+	      <input class="input-big" type="text" id="idno" value={{user.c_id_card_no}} >
+            </div>
+          </div>     
+      
+                         <div class="control-group">
+            <label class="control-label">电话号码</label>
+            <div class="controls docs-input-sizes">
+	      <input class="input-big" type="text" id="tel" value={{user.c_phone_no}} >
+            </div>
+          </div>                
+          
+           <div class="control-group">
+            <label class="control-label" for="select01">账户状态</label>
+            <div class="controls">
+              <select id="user_state">
+                {{user_state}}
+              </select>
+            </div>
+          </div> 
+          
+          
+        <div class="control-group">
+            <label class="control-label">账户过期时间</label>
+            <div class="controls">
+               <div class="input-append date " id="expire_date" data-date='2012-08-11' data-date-format="yyyy-mm-dd">
+				<input class="input-big" type="text" id="expire_date_rd" value="" readonly>
+				<span class="add-on"><i class="icon-th"></i></span>
+			     </div>            
+			 </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">注册时间</label>
+            <div class="controls docs-input-sizes">
+              <input class="input-big" type="text" value="{{user.c_register_time}}" disabled >
+            </div>
+          </div>       
+        <div class="control-group">
+            <label class="control-label">最后一次登陆时间</label>
+            <div class="controls docs-input-sizes">
+              <input class="input-big" type="text" id="last_login" disabled>
+            </div>
+          </div>
+
+        <div class="form-actions">
+            <button type="submit" id="submit_modify_user" class="btn btn-primary">提交更改</button>
+            <a class="btn" href="/userinfo/user_list">取消</a>
+          </div>
+        </fieldset>
+      </div>
+
+</div><!--/span-->
+
+<div class="span2" id="account">
+<div class="well">
+     <a href="/userinfo/cash_modify?uid={{uid}}" id="submit_modify_user" class="btn btn-info btn-large">账户充值</a>
+</div>
+</div>
+
+
+
+
+</div><!-- /row -->
+
+{% endblock %}

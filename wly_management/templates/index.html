@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block header %}
+
+<script src="/static/js/index.js"></script>
+<input type="hidden" id="weibo_try" name="variable" value="{{ weibo.try }}">
+<input type="hidden" id="weibo_normal" name="variable" value="{{ weibo.normal }}">
+<input type="hidden" id="weibo_stop" name="variable" value="{{ weibo.stop }}">
+<input type="hidden" id="weibo_crack" name="variable" value="{{ weibo.crack }}">
+<input type="hidden" id="seo_try" name="variable" value="{{ seo.try }}">
+<input type="hidden" id="seo_normal" name="variable" value="{{ seo.normal }}">
+<input type="hidden" id="seo_stop" name="variable" value="{{ seo.stop }}">
+<input type="hidden" id="seo_crack" name="variable" value="{{ seo.crack }}">
+<input type="hidden" id="sem_try" name="variable" value="{{ sem.try }}">
+<input type="hidden" id="sem_normal" name="variable" value="{{ sem.normal }}">
+<input type="hidden" id="sem_stop" name="variable" value="{{ sem.stop }}">
+<input type="hidden" id="sem_crack" name="variable" value="{{ sem.crack }}">
+
+<input type="hidden" id="money_weibo" name="variable" value="{{ money.weibo }}">
+<input type="hidden" id="money_seo" name="variable" value="{{ money.seo }}">
+<input type="hidden" id="money_sem" name="variable" value="{{ money.sem }}">
+<input type="hidden" id="money_total" name="variable" value="{{ money.total }}">
+
+{% endblock%}
+{% block title %}卧龙云
+{% endblock%}
+
+{% block content %}
+   
+<header class="hero-unit" align="center">
+<div id="chart_overview_clients" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+
+<header class="hero-unit" align="center">
+<div id="chart_overview_money" style="min-width: 750px; height: 400px; margin: 0 auto"></div>
+</header>
+
+{% endblock %}

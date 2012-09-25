@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block header %}
+
+<script src="/static/js/login.js"></script>
+
+{% endblock%}
+{% block title %}添加管理员
+{% endblock%}
+
+{% block content %}
+<header class="hero-unit " align="center">
+<form action="/auth/push_add_admin" class="form-horizontal ">
+        <div class="control-group">
+        <input type="text" class="input-medium" name="username" placeholder="用户名">
+        <input type="text" class="input-medium" name="email" placeholder="邮箱">
+        <input  class="input-medium" name="pwd" placeholder="密码" type="password">
+        </div>
+        <button class="btn btn-success" id="add"><i class="icon-search icon-white"></i>添加</button>
+
+</form>   
+</header>
+{% endblock %}

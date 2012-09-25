@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block header %}
+
+<script src="/static/js/userinfo.js"></script>
+
+
+{% endblock%}
+{% block title %}用户管理{% endblock%}
+{% block content %}
+<header class="hero-unit " align="center">
+<a class="btn btn-large btn-primary" href="/userinfo/user_list">用户列表</a>
+<a class="btn btn-large btn-primary" href="/userinfo/cash_modify">进行充值</a>
+<a class="btn btn-large btn-primary" href="/userinfo/user_modify">修改用户信息</a>
+
+ 
+</header>
+{% endblock %}

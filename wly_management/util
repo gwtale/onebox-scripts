@@ -1,0 +1,11 @@
+                name: '正式用户',
+                data: [document.getElementById("weibo_normal").value,document.getElementById("seo_normal").value, document.getElementById("sem_normal").value]
+            }, {
+                name: '试用用户',
+                data: [document.getElementById("weibo_try").value,document.getElementById("seo_try").value, document.getElementById("sem_try").value]
+            }, {
+                name: '停用用户',
+                data: [document.getElementById("weibo_stop").value,document.getElementById("seo_stop").value, document.getElementById("sem_stop").value]
+            }, {
+                name: '非法用户',
+                data: [document.getElementById("weibo_crack").value,document.getElementById("seo_crack").value, document.getElementById("sem_crack").value]

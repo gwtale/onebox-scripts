@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load search_template_tag_extra %}
+
+{% block header %}
+
+<script src="/static/js/cash.js"></script>
+
+
+{% endblock%}
+{% block title %}用户充值{% endblock%}
+{% block content %}
+<div class="row">
+    <div>
+      <div class="form-horizontal" id="cash_form">
+        <fieldset>
+          
+          <legend>修改财务信息</legend>
+          <div class="control-group">
+            <label class="control-label">用户ID</label>
+            <div class="controls docs-input-sizes">
+	      <input class="input-big" id="user_id" type="text" value={{uid}} disabled>
+            </div>
+             <label class="control-label">用户名</label>
+            <div class="controls docs-input-sizes">
+	      <input class="input-big" id="user_id" type="text" value={{info.c_user_name}} disabled>
+            </div>
+             <label class="control-label">真实姓名</label>
+            <div class="controls docs-input-sizes">
+	      <input class="input-big" id="user_id" type="text" value={{info.c_real_name}} disabled>
+            </div>
+             <label class="control-label">身份证</label>
+            <div class="controls docs-input-sizes">
+	      <input class="input-big" id="user_id" type="text" value={{info.c_id_card_no}} disabled>
+            </div>
+ <label class="control-label">当前到期时间</label>
+            <div class="controls docs-input-sizes">
+              <input class="input-big" id="user_id" type="text" value={{info.c_expired_time|format_date}} disabled>
+            </div>         
+
+
+ </div>
+           <div class="control-group">
+
+            <label class="control-label" for="appendedInput">充值金额</label>
+
+            <div class="controls">
+
+              <div class="input-append">
+
+                <input class="span5" id="money" size="16" type="text"><span class="add-on">元</span>
+
+              </div>
+            </div>
+
+          </div>         
+
+                   <div class="control-group">
+
+            <label class="control-label" for="appendedInput">购买天数</label>
+
+            <div class="controls">
+
+              <div class="input-append">
+
+                <input class="span5" id="days" size="16" type="text"><span class="add-on">天</span>
+
+              </div>
+
+            </div>
+
+          </div>    
+        <div class="form-actions">
+            <button type="submit" id="add_cash" class="btn btn-primary">充值</button>
+            <a class="btn" id="cancel" href="/userinfo/user_list">取消</a>
+          </div>
+          
+        </fieldset>
+               </div>
+      
+    </div>
+  
+   </div><!-- /row -->
+       <div class="alert alert-success hide" id="cash_ok"><a href="/userinfo/user_list">修改成功,点击返回</a></div>
+        <div class="alert alert-error hide" id="cash_error"><a href="/userinfo/user_list">修改失败,点击返回</a></div>
+ 
+{% endblock %}

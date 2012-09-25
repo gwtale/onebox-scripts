@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load search_template_tag_extra %}
+
+{% block header %}
+
+<script src="/static/js/use_time.js"></script>
+<input type="hidden" id="weibo" name="variable" value="{{ result.weibo }}">
+<input type="hidden" id="sem" name="variable" value="{{ result.sem }}">
+<input type="hidden" id="seo" name="variable" value="{{ result.seo }}">
+<input type="hidden" id="during" name="variable" value='{{ result.during }}'>
+
+{% endblock%}
+{% block title %}使用时间
+{% endblock%}
+{% block content %}
+<div class="well">
+       <table class="table table-bordered">
+         <thead>
+           <tr>
+             <th>用户名</th>
+             <th>时间</th>
+             <th>在线时长</th>
+           </tr>
+         </thead>
+         <tbody>
+ 			{% if result_list.object_list %} 				
+ 			{% for item in result_list.object_list %}
+ 			<tr>
+                <td><a  href="/userinfo/user_modify?uid={{ item.c_user_id }}">{{item.c_user_name}}</a></td>
+                <td><a >{{ item.date|format_date }}</a></td>
+
+                <td><a>{{ item.online_time }}小时</a></td>
+                
+ 				
+ 			</tr>
+ 			{% endfor %}
+ 			<div class="pagination">
+                 <ul>
+                     {% if result_list.has_previous %}
+                     <li><a href="/userinfo/use_time?page={{ result_list.previous_page_number }}">&laquo;</a></li> 
+                     {% else %}
+                     <li class="disabled"><a>&laquo;</a></li> 
+                     {% endif %}
+                     {% for p in page_range %}
+                     {% ifequal p result_list.number %}
+                     <li class="active"><a href="#">{{p}}</a></li>
+                     {% else %}
+                     <li><a href="/userinfo/use_time?page={{p}}">{{p}}</a></li>
+                     {% endifequal %}
+                     {% endfor %}
+                     {% if result_list.has_next %}
+                     <li><a href="/userinfo/use_time?page={{ result_list.next_page_number }}">&raquo;</a></li>
+                     {% else %}
+                      <li class="disabled"><a>&raquo;</a></li>
+                     {% endif %}
+                          
+
+                 </ul>
+               </div>
+
+ 			 			{% else %}
+ 			<tr><td colspan="4">没有结果<br><a class="label  label-important">暂时没有发现用户,请检查数据库数据。</a>
+ 			</td></tr>
+ 			{% endif %}
+ 			
+         </tbody>
+       
+       </table>
+	<div class="pagination">
+                 <ul>
+                     {% if result_list.has_previous %}
+                     <li><a href="/userinfo/use_time?page={{ result_list.previous_page_number }}">&laquo;</a></li> 
+                     {% else %}
+                     <li class="disabled"><a>&laquo;</a></li> 
+                     {% endif %}
+                     {% for p in page_range %}
+                     {% ifequal p result_list.number %}
+                     <li class="active"><a href="#">{{p}}</a></li>
+                     {% else %}
+                     <li><a href="/userinfo/use_time?page={{p}}">{{p}}</a></li>
+                     {% endifequal %}
+                     {% endfor %}
+                     {% if result_list.has_next %}
+                     <li><a href="/userinfo/use_time?page={{ result_list.next_page_number }}">&raquo;</a></li>
+                     {% else %}
+                      <li class="disabled"><a>&raquo;</a></li>
+                     {% endif %}
+                          
+
+                 </ul>
+               </div>
+
+</div>
+
+{% endblock %}
