@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load search_template_tag_extra %}
+
+{% block header %}
+
+<script src="/static/js/user_list.js"></script>
+<script src="/static/js/bootstrap-datepicker.js"></script>
+<link href="/static/css/datepicker.css" rel="stylesheet"  type="text/css"/>
+{% endblock%}
+{% block title %}用户列表{% endblock%}
+{% block content %}
+<div class="well">
+<div class="span9" style="margin-left:3px">
+        <form action="/userinfo/user_list" class="form-horizontal ">
+        <div class="control-group">
+        <input type="text" name="userid" class="input-small" placeholder="用户ID"></input> 
+        <input type="text" class="input-medium" name="username" placeholder="用户名">
+                <input type="text" class="input-medium" name="realname" placeholder="真实姓名">
+                <input type="text" class="input-medium" name="company" placeholder="公司">
+                <input type="text" class="input-medium" name="mail" placeholder="邮箱">
+                <input type="text" class="input-medium" name="tel" placeholder="电话">
+
+        </div>
+                   <div class="control-group">
+                 账户状态:  
+              <label class="checkbox inline">
+                <input type="checkbox" name="state_test" style="width:25px"  class="inlineCheckbox"  value="0"> 试用
+              </label>
+              <label class="checkbox inline">
+                <input type="checkbox" name="state_normal" style="width:25px"   class="inlineCheckbox" value="1"> 正常
+              </label>
+              <label class="checkbox inline">
+                <input type="checkbox" name="state_stop"   style="width:25px"  class="inlineCheckbox" value="-1"> 停用
+              </label>
+             <label class="checkbox inline">
+                <input type="checkbox" name="state_crack"   style="width:25px"  class="inlineCheckbox" value="-2"> 非法
+              </label>
+                          </div>
+
+                   <div class="control-group">
+              终端类型: <label class="checkbox inline">
+                <input type="checkbox" name="type_weibo" style="width:25px"  class="inlineCheckbox"  value="0"> 微博
+              </label>
+              <label class="checkbox inline">
+                <input type="checkbox" name="type_seo" style="width:25px"   class="inlineCheckbox" value="1"> SEO
+              </label>
+              <label class="checkbox inline">
+                <input type="checkbox" name="type_sem"   style="width:25px"  class="inlineCheckbox" value="2"> SEM
+              </label>
+            </div>
+            <div class="control-group" style="margin:0 auto;float:none;">
+            <button class="btn btn-success" id="analyse"><i class="icon-search icon-white"></i>筛选</button>
+            </div>
+        </from>
+</div>    
+</div>
+<div class="well">
+       <table class="table table-bordered">
+         <thead>
+           <tr>
+                        <th>ID</th>
+
+             <th>用户名</th>
+             <th>公司名称</th>
+            <th>个人姓名</th>
+
+             <th>电话号码</th>
+            <th>邮箱地址</th>
+
+            <th>账户状态</th>
+                <th>终端类型</th>
+
+             <th>账户到期时间</th>
+             <th>操作</th>
+
+
+           </tr>
+         </thead>
+         <tbody>
+ 			{% if result_list.object_list %} 				
+ 			{% for item in result_list.object_list %}
+ 			<tr>
+ 			                <td style="width: 5%"><a class="tooltip-test" title="{{ item.c_user_id}}">{{item.c_user_id}}</a></td>
+
+                <td style="width: 10%"><a class="tooltip-test" title="{{ item.c_user_name}}">{{item.c_user_name}}</a></td>
+                <td style="width: 15%"><a class="tooltip-test" title="搜索公司详情:<br>{{item.c_company_name}}" href="http://www.360so.com/s?ie=utf-8&src=hao_phome&_re=0&q={{ item.c_company_name }}" target="_blank">{{ item.c_company_name|cut_str:12 }}</a></td>
+                <td style="width: 10%"><a class="tooltip-test" title="{{ item.c_real_name}}" href="http://www.360so.com/s?ie=utf-8&src=hao_phome&_re=0&q={{ item.c_real_name }}" target="_blank">{{ item.c_real_name|cut_str:8 }}</a></td>
+
+                <td style="width: 10%"><a class="tooltip-test" title="查看该号码归属地"  target="_blank" href="http://www.ip138.com:8080/search.asp?action=mobile&mobile={{ item.c_phone_no }}">{{ item.c_phone_no }}</a></td>
+                                <td><a target="_blank" href="mailto:{{ item.c_email_addr }}">{{ item.c_email_addr }}</a></td>
+
+ 				<td style="width: 7%"><p>{{ item.c_count_state|state_map }}</p></td>
+ 				 				<td style="width: 7%"><p>{{ item.c_type|type_map }}</p></td>
+
+ 				<td style="width: 14%"><p>{{item.c_expired_time|date_to_str}}</p></td>
+ 				<td style="width: 10%">
+     				 <div class="btn-group">
+          <a class="btn btn-primary" href="/userinfo/user_modify?uid={{ item.c_user_id }}">编辑</a>
+          <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href="/userinfo/user_modify?uid={{ item.c_user_id }}">编辑</a></li>
+            <li><a href="/userinfo/cash_modify?uid={{ item.c_user_id }}">充值</a></li>
+          </ul>
+        </div><!-- /btn-group -->     				
+ 				</td>
+ 				
+ 			</tr>
+ 			{% endfor %}
+
+ 			<div class="pagination">
+                 <ul>
+                     {% if result_list.has_previous %}
+                     <li><a href="/userinfo/user_list?{{cur_url}}&page={{ result_list.previous_page_number }}">&laquo;</a></li> 
+                     {% else %}
+                     <li class="disabled"><a>&laquo;</a></li> 
+                     {% endif %}
+                     {% for p in page_range %}
+                     {% ifequal p result_list.number %}
+                     <li class="active"><a href="#">{{p}}</a></li>
+                     {% else %}
+                     <li><a href="/userinfo/user_list?{{cur_url}}&page={{p}}">{{p}}</a></li>
+                     {% endifequal %}
+                     {% endfor %}
+                     {% if result_list.has_next %}
+                     <li><a href="/userinfo/user_list?{{cur_url}}&page={{ result_list.next_page_number }}">&raquo;</a></li>
+                     {% else %}
+                      <li class="disabled"><a>&raquo;</a></li>
+                     {% endif %}
+                          
+
+                 </ul>
+               </div>
+
+ 			 			{% else %}
+ 			<tr><td colspan="4">没有结果<br><a class="label  label-important">暂时没有发现用户,请检查数据库数据。</a>
+ 			</td></tr>
+ 			{% endif %}
+ 			
+         </tbody>
+       
+       </table>
+	<div class="pagination">
+                 <ul>
+                     {% if result_list.has_previous %}
+                     <li><a href="/userinfo/user_list?{{cur_url}}&page={{ result_list.previous_page_number }}">&laquo;</a></li> 
+                     {% else %}
+                     <li class="disabled"><a>&laquo;</a></li> 
+                     {% endif %}
+                     {% for p in page_range %}
+                     {% ifequal p result_list.number %}
+                     <li class="active"><a href="#">{{p}}</a></li>
+                     {% else %}
+                     <li><a href="/userinfo/user_list?{{cur_url}}&page={{p}}">{{p}}</a></li>
+                     {% endifequal %}
+                     {% endfor %}
+                     {% if result_list.has_next %}
+                     <li><a href="/userinfo/user_list?{{cur_url}}&page={{ result_list.next_page_number }}">&raquo;</a></li>
+                     {% else %}
+                      <li class="disabled"><a>&raquo;</a></li>
+                     {% endif %}
+                          
+
+                 </ul>
+               </div>
+
+</div>
+
+
+{% endblock %}

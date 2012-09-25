@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% block header %}
+
+<script src="/static/js/online_users.js"></script>
+<input type="hidden" id="weibo_try" name="variable" value="{{ weibo_online.try }}">
+<input type="hidden" id="weibo_normal" name="variable" value="{{ weibo_online.normal }}">
+<input type="hidden" id="weibo_stop" name="variable" value="{{ weibo_online.stop }}">
+<input type="hidden" id="weibo_crack" name="variable" value="{{ weibo_online.crack }}">
+
+<input type="hidden" id="seo_try" name="variable" value="{{ seo_online.try }}">
+<input type="hidden" id="seo_normal" name="variable" value="{{ seo_online.normal }}">
+<input type="hidden" id="seo_stop" name="variable" value="{{ seo_online.stop }}">
+<input type="hidden" id="seo_crack" name="variable" value="{{ seo_online.crack }}">
+
+<input type="hidden" id="sem_try" name="variable" value="{{ sem_online.try }}">
+<input type="hidden" id="sem_normal" name="variable" value="{{ sem_online.normal }}">
+<input type="hidden" id="sem_stop" name="variable" value="{{ sem_online.stop }}">
+<input type="hidden" id="sem_crack" name="variable" value="{{ sem_online.crack }}">
+
+{% endblock%}
+{% block title %}用户在线情况
+{% endblock%}
+{% block content %}
+
+<div class="alert alert-success">
+总注册用户数:{{total_users}}<br>微博客户端在线人数:{{online_weibo_total}} | SEO客户端在线人数:{{online_seo_total}} | SEM客户端在线人数:{{online_sem_total}}
+</div>
+<header class="hero-unit " align="center">
+<div id="chart_online_users" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+</header>
+
+<header class="hero-unit " align="center">
+<div id="chart_online_users_share_weibo" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<hr>
+<div class="well">
+    <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                  <span class="badge badge-success">查看在线用户</span>
+                </a>
+              </div>
+              <div id="collapseOne" class="accordion-body collapse ">
+                <div class="accordion-inner" >
+                <div  style="max-height:700px;overflow: auto" >
+       <table class="table table-bordered" >
+         <thead>
+           <tr>
+            <th>用户ID</th>
+
+             <th>用户名</th>
+             <th>公司名称</th>
+             <th>操作</th>
+           </tr>
+         </thead>
+         <tbody>
+ 			{% if weibo_table_list %} 				
+ 			{% for item in weibo_table_list %}
+ 			<tr>
+ 			                <td style="width: 5%"><p>{{item.c_user_id}}</p></td>
+
+                <td style="width: 20%"><p>{{item.c_user_name}}</p></td>
+                <td style="width: 20%"><p>{{ item.c_company_name }}</p></td>
+<td style="width: 5%">
+     				 <div class="btn-group">
+          <a class="btn btn-primary" href="/userinfo/user_modify?uid={{ item.c_user_id }}">编辑</a>
+        </div><!-- /btn-group -->     				
+ 				</td>
+ 			</tr>
+ 			{% endfor %}
+ 			 {% else %}
+ 			<tr><td colspan="4">没有结果<br><a class="label  label-important">暂时没有发现数据。</a>
+ 			</td></tr>
+ 			{% endif %}
+         </tbody>
+       
+       </table>
+                </div>
+</div>
+
+              </div>
+            </div>
+</div>
+</header>
+
+<header class="hero-unit " align="center">
+<div id="chart_online_users_share_seo" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<hr>
+<div class="well">
+    <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                  <span class="badge badge-success">查看在线用户</span>
+                </a>
+              </div>
+              <div id="collapseTwo" class="accordion-body collapse ">
+                <div class="accordion-inner">
+                                <div  style="max-height:700px;overflow: auto" >
+
+       <table class="table table-bordered">
+         <thead>
+           <tr>
+                        <th>用户ID</th>
+
+             <th>用户名</th>
+             <th>公司名称</th>
+             <th>操作</th>
+           </tr>
+         </thead>
+         <tbody>
+ 			{% if seo_table_list %} 				
+ 			{% for item in seo_table_list %}
+ 			<tr>
+ 			 			                <td style="width: 5%"><p>{{item.c_user_id}}</p></td>
+
+                <td style="width: 20%"><p>{{item.c_user_name}}</p></td>
+                <td style="width: 20%"><p>{{ item.c_company_name }}</p></td>
+<td style="width: 5%">
+     				 <div class="btn-group">
+          <a class="btn btn-primary" href="/userinfo/user_modify?uid={{ item.c_user_id }}">编辑</a>
+        </div><!-- /btn-group -->     				
+ 				</td>
+ 			</tr>
+ 			{% endfor %}
+ 			 {% else %}
+ 			<tr><td colspan="4">没有结果<br><a class="label  label-important">暂时没有发现数据。</a>
+ 			</td></tr>
+ 			{% endif %}
+         </tbody>
+       
+       </table>
+                                </div>
+</div>
+
+              </div>
+            </div>
+</div>
+
+</header>
+<header class="hero-unit " align="center">
+<div id="chart_online_users_share_sem" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<hr>
+<div class="well">
+    <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                  <span class="badge badge-success">查看在线用户</span>
+                </a>
+              </div>
+              <div id="collapseThree" class="accordion-body collapse ">
+                <div class="accordion-inner">
+                                <div  style="max-height:700px;overflow: auto" >
+
+       <table class="table table-bordered">
+       
+         <thead>
+           <tr>
+                        <th>用户ID</th>
+             <th>用户名</th>
+             <th>公司名称</th>
+             <th>操作</th>
+           </tr>
+         </thead>
+         <tbody>
+ 			{% if sem_table_list %} 				
+ 			{% for item in sem_table_list %}
+ 			<tr>
+ 			 			 			                <td style="width: 5%"><p>{{item.c_user_id}}</p></td>
+
+                <td style="width: 20%"><p>{{item.c_user_name}}</p></td>
+                <td style="width: 20%"><p>{{ item.c_company_name }}</p></td>
+<td style="width: 5%">
+     				 <div class="btn-group">
+          <a class="btn btn-primary" href="/userinfo/user_modify?uid={{ item.c_user_id }}">编辑</a>
+        </div><!-- /btn-group -->     				
+ 				</td>
+ 			</tr>
+ 			{% endfor %}
+ 			 {% else %}
+ 			<tr><td colspan="4">没有结果<br><a class="label  label-important">暂时没有发现数据。</a>
+ 			</td></tr>
+ 			{% endif %}
+         </tbody>
+       
+       </table>
+                                </div>
+</div>
+
+              </div>
+            </div>
+</div>
+
+</header>
+{% endblock %}

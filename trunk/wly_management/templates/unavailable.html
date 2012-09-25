@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block header %}
+
+<script src="/static/js/unavailable.js"></script>
+<input type="hidden" id="weibo" name="variable" value="{{ result.weibo }}">
+<input type="hidden" id="sem" name="variable" value="{{ result.sem }}">
+<input type="hidden" id="seo" name="variable" value="{{ result.seo }}">
+<input type="hidden" id="during" name="variable" value='{{ result.during }}'>
+
+{% endblock%}
+{% block title %}使用时间
+{% endblock%}
+{% block content %}
+
+ <div class="hero-unit">
+        <h1>服务暂不可用</h1><br>
+        <p>请稍后重试</p>
+      </div>
+
+{% endblock %}

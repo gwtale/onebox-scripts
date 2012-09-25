@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% load search_template_tag_extra %}
+
+{% block header %}
+
+<script src="/static/js/paidinfo.js"></script>
+<input type="hidden" id="w_try" name="variable" value="{{ weibo_paidinfo.try }}">
+<input type="hidden" id="w_normal" name="variable" value="{{ weibo_paidinfo.normal }}">
+<input type="hidden" id="w_stop" name="variable" value="{{ weibo_paidinfo.stop }}">
+<input type="hidden" id="w_crack" name="variable" value="{{ weibo_paidinfo.crack }}">
+
+<input type="hidden" id="o_try" name="variable" value="{{ seo_paidinfo.try }}">
+<input type="hidden" id="o_normal" name="variable" value="{{seo_paidinfo.normal }}">
+<input type="hidden" id="o_stop" name="variable" value="{{ seo_paidinfo.stop }}">
+<input type="hidden" id="o_crack" name="variable" value="{{ seo_paidinfo.crack }}">
+
+<input type="hidden" id="m_try" name="variable" value="{{ sem_paidinfo.try }}">
+<input type="hidden" id="m_normal" name="variable" value="{{ sem_paidinfo.normal }}">
+<input type="hidden" id="m_stop" name="variable" value="{{ sem_paidinfo.stop }}">
+<input type="hidden" id="m_crack" name="variable" value="{{ sem_paidinfo.crack }}">
+
+
+{% endblock%}
+{% block title %}付费情况{% endblock%}
+{% block content %}
+<header class="hero-unit" align="center">
+<div id="chart_paidinfo_weibo" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<hr>
+<div class="well">
+    <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseWeibo">
+                  <span class="badge badge-success">查看付费详情</span>
+                </a>
+              </div>
+              <div id="collapseWeibo" class="accordion-body collapse ">
+                <div class="accordion-inner">
+                                <div  style="max-height:700px;overflow: auto" >
+
+       <table class="table table-bordered">
+       
+         <thead>
+           <tr>
+            <th>ID</th>
+             <th>用户名</th>
+             <th>充值金额</th>
+             <th>充值时间</th>
+                          <th>操作</th>
+
+           </tr>
+         </thead>
+         <tbody>
+ 			{% if weibo_paidinfo_list %} 				
+ 			{% for item in weibo_paidinfo_list %}
+ 			<tr>
+ 			 			 			                <td style="width: 5%"><p>{{item.c_user_id}}</p></td>
+
+                <td style="width: 20%"><p>{{item.c_user_name}}</p></td>
+                <td style="width: 20%"><p>{{ item.c_pay_amount }}元</p></td>
+                            <td style="width: 20%"><p>{{ item.c_pay_time|format_date }}</p></td>
+
+<td style="width: 5%">
+     				 <div class="btn-group">
+          <a class="btn btn-primary" href="/userinfo/user_modify?uid={{ item.c_user_id }}">编辑</a>
+        </div><!-- /btn-group -->     				
+ 				</td>
+ 			</tr>
+ 			{% endfor %}
+ 			 {% else %}
+ 			<tr><td colspan="4">没有结果<br><a class="label  label-important">暂时没有发现数据。</a>
+ 			</td></tr>
+ 			{% endif %}
+         </tbody>
+       
+       </table>
+                                </div>
+</div>
+
+              </div>
+            </div>
+</div>
+</header>
+
+
+<header class="hero-unit" align="center">
+<div id="chart_paidinfo_seo" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<hr>
+<div class="well">
+    <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSeo">
+                  <span class="badge badge-success">查看付费详情</span>
+                </a>
+              </div>
+              <div id="collapseSeo" class="accordion-body collapse ">
+                <div class="accordion-inner">
+                                <div  style="max-height:700px;overflow: auto" >
+
+       <table class="table table-bordered">
+       
+         <thead>
+           <tr>
+            <th>ID</th>
+             <th>用户名</th>
+             <th>充值金额</th>
+             <th>充值时间</th>
+                                       <th>操作</th>
+
+           </tr>
+         </thead>
+         <tbody>
+ 			{% if seo_paidinfo_list %} 				
+ 			{% for item in seo_paidinfo_list %}
+ 			<tr>
+ 			 			 			                <td style="width: 5%"><p>{{item.c_user_id}}</p></td>
+
+                <td style="width: 20%"><p>{{item.c_user_name}}</p></td>
+                <td style="width: 20%"><p>{{ item.c_pay_amount }}元</p></td>
+                            <td style="width: 20%"><p>{{ item.c_pay_time|format_date }}</p></td>
+
+<td style="width: 5%">
+     				 <div class="btn-group">
+          <a class="btn btn-primary" href="/userinfo/user_modify?uid={{ item.c_user_id }}">编辑</a>
+        </div><!-- /btn-group -->     				
+ 				</td>
+ 			</tr>
+ 			{% endfor %}
+ 			 {% else %}
+ 			<tr><td colspan="4">没有结果<br><a class="label  label-important">暂时没有发现数据。</a>
+ 			</td></tr>
+ 			{% endif %}
+         </tbody>
+       
+       </table>
+                                </div>
+</div>
+
+              </div>
+            </div>
+</div>
+
+</header>
+<header class="hero-unit" align="center">
+<div id="chart_paidinfo_sem" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<hr>
+<div class="well">
+    <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSem">
+                  <span class="badge badge-success">查看付费详情</span>
+                </a>
+              </div>
+              <div id="collapseSem" class="accordion-body collapse ">
+                <div class="accordion-inner">
+                                <div  style="max-height:700px;overflow: auto" >
+
+       <table class="table table-bordered">
+       
+         <thead>
+           <tr>
+            <th>ID</th>
+             <th>用户名</th>
+             <th>充值金额</th>
+             <th>充值时间</th>
+                                       <th>操作</th>
+
+           </tr>
+         </thead>
+         <tbody>
+ 			{% if sem_paidinfo_list %} 				
+ 			{% for item in sem_paidinfo_list %}
+ 			<tr>
+ 			 			 			                <td style="width: 5%"><p>{{item.c_user_id}}</p></td>
+
+                <td style="width: 20%"><p>{{item.c_user_name}}</p></td>
+                <td style="width: 20%"><p>{{ item.c_pay_amount }}元</p></td>
+                            <td style="width: 20%"><p>{{ item.c_pay_time|format_date }}</p></td>
+
+<td style="width: 5%">
+     				 <div class="btn-group">
+          <a class="btn btn-primary" href="/userinfo/user_modify?uid={{ item.c_user_id }}">编辑</a>
+        </div><!-- /btn-group -->     				
+ 				</td>
+ 			</tr>
+ 			{% endfor %}
+ 			 {% else %}
+ 			<tr><td colspan="4">没有结果<br><a class="label  label-important">暂时没有发现数据。</a>
+ 			</td></tr>
+ 			{% endif %}
+         </tbody>
+       
+       </table>
+                                </div>
+</div>
+
+              </div>
+            </div>
+</div>
+
+</header>
+{% endblock %}

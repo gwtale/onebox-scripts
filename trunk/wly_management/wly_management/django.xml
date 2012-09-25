@@ -1,0 +1,21 @@
+<uwsgi>
+    <socket>127.0.0.1:8630</socket>
+    <chdir>/home/jizhongkui/wly_management/</chdir>
+    <pythonpath>/usr/local/lib/python2.7</pythonpath>
+	<socket-timeout>60</socket-timeout>
+	<listen>128</listen>
+    <module>wsgi</module>
+ <pidfile>/tmp/uwsgi.pid</pidfile>
+<master/> 
+<daemonize>/home/jizhongkui/log/uwsgi.txt</daemonize>
+<processes>20</processes>
+<max-requests>10000</max-requests> 
+<buffer-size>32768</buffer-size>
+<harakiri>30</harakiri>
+<post-buffering>4096</post-buffering>
+<memory-report/>
+<enable-threads/> 
+<limit-as>20480</limit-as>
+</uwsgi>
+
+

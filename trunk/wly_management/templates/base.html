@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <script src="/static/js/jquery.js"></script>
+      <script src="/static/js/base.js"></script>
+      <script src="/static/js/bootstrap-button.js"></script>
+      <script src="/static/js/jquery.jgrowl.js"></script>
+      <link href="/static/css/jquery.jgrowl.css" rel="stylesheet"  type="text/css"/>
+      <link href="/static/css/bootstrap.css" rel="stylesheet">
+      <link href="/static/css/base.css" rel="stylesheet">
+      <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+      <link rel="stylesheet" href="/static/css/docs.css" type="text/css"/>
+      <script src="/static/js/date.js"></script>
+     <script src="/static/js/daterangepicker.js"></script>
+        <link href="/static/css/daterangepicker.css" rel="stylesheet">
+      <link rel="shortcut icon" href="/static/ico/favicon.ico">
+      {% block header %}  
+       
+       {% endblock %}
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %} | 一个更懂你的社会化营销工具 </title>
+    <meta property="wb:webmaster" content="07f4c6cc5f9cddca" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Social Product Search Engine,微博营销">
+    <meta name="author" content="ericyue">
+    
+    
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  </head>
+
+<body id="top">
+    
+   <div class="navbar navbar-fixed-top" id="pagewrap">
+      
+      <div class="navbar-inner">
+          
+          <p id="back-top">
+              		<a href="#top"><span></span></a>
+          </p>
+        <div class="container-fluid">
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a class="brand" align="left" href="#">OneboxTech</a></li>
+              <li id="overview-top"><a href="/">总览</a></li>
+              <li id="userinfo-top"><a href="/userinfo/user_list">用户管理</a></li>
+              <li id="payhistory-top"><a href="/userinfo/payhistory">付费历史</a></li>
+
+            </ul>
+            
+            <ul class="nav pull-right">
+                        <li class="divider-vertical"></li>
+                         {% if username %}
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                              <i class="icon-user icon-white"></i> {{username}},欢迎回来! <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                           <li><a href="/auth/add_admin"><i class="icon-plus"></i> 添加管理员</a></li>
+
+                                      <li><a href="/auth/logout"><i class="icon-ban-circle"></i> 注销</a></li>
+
+                                    </ul>
+                        </li>
+                        {% else  %}
+                         <li><a><i class="icon-glass icon-white"></i> 请登陆</a></li>
+                        {% endif %}      
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+    <div class="row-fluid hide" id="main_form">
+    <div class="span3" id="left_form">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list" id="menu_left">
+              <li class="nav-header">客户端信息</li>
+              <li id="setup_amounts"><a href="/clientinfo/setup_amounts">安装量</a></li>
+              <li id="user_location"><a href="/userinfo/user_location">分布</a></li>
+              <li class="nav-header">用户信息</li>
+              <li id="paidinfo"><a href="/userinfo/paidinfo">付费情况</a></li>
+              <li id="use_time"><a href="/userinfo/use_time">使用时间</a></li>
+              <li id="online_users"><a href="/userinfo/online_users">在线情况</a></li>
+            </ul>
+          </div><!--/.well -->
+   </div><!--/span-->
+
+<div class="span9" id="right_form">
+{% block content %}  
+         
+{% endblock %} 
+</div>
+         
+    </div>
+      <hr>
+      <footer>
+        <p>&copy; <a href="http://oneboxtech.com" class="tooltip-test" title="访问<OneboxTech>获得更多产品信息">OneBox Technology</a> 2012</p>
+      </footer>
+
+<blockquote class="pull-right">
+    <!-- Place this render call where appropriate -->
+  <p><b> 一个更懂你的社会化营销工具.</b></p>
+  <small><cite>当前版本: Demo</cite></small>
+</blockquote>
+
+    </div> <!-- /container -->
+    
+    <script src="/static/js/bootstrap-transition.js"></script>
+    <script src="/static/js/bootstrap-alert.js"></script>
+    <script src="/static/js/bootstrap-modal.js"></script>
+    <script src="/static/js/bootstrap-dropdown.js"></script>
+    <script src="/static/js/bootstrap-scrollspy.js"></script>
+    <script src="/static/js/bootstrap-tooltip.js"></script>
+    <script src="/static/js/bootstrap-popover.js"></script>
+    <script src="/static/js/bootstrap-collapse.js"></script>
+    <script src="/static/js/bootstrap-carousel.js"></script>
+    <script src="/static/js/highchart/highcharts.js"></script>
+    <script src="/static/js/bootstrap-typeahead.js"></script>
+    <script src="/static/js/application.js"></script>
+
+
+  </body>
+  
+</html>

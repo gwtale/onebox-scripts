@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load search_template_tag_extra %}
+
+{% block header %}
+
+<script src="/static/js/setup_amounts.js"></script>
+
+
+<input type="hidden" id="weibo" name="variable" value="{{ result.weibo }}">
+<input type="hidden" id="sem" name="variable" value="{{ result.sem }}">
+<input type="hidden" id="seo" name="variable" value="{{ result.seo }}">
+<input type="hidden" id="during" name="variable" value='{{ result.during }}'>
+
+{% endblock%}
+{% block title %}装机量
+{% endblock%}
+{% block content %}
+<div id="reportrange" style="margin-top:10px;margin-right:10px" class="btn pull-right">
+        <i class="icon-calendar icon-large"></i>
+        <span>{{current_datetime}}</span> <b class="caret"></b>
+</div>
+
+<header class="hero-unit" align="center">
+
+<div id="chart_setup_amounts" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</header>
+<div class="well" style="max-height:800px;overflow: auto" >
+<h1>近期各客户端登陆统计</h1>
+       <table class="table table-bordered">
+         <thead>
+           <tr>
+             <th>客户端种类</th>
+             <th>日期</th>
+             <th>数量</th>
+           </tr>
+         </thead>
+         <tbody>
+ 			{% if result_list.object_list %} 				
+ 			{% for item in result_list.object_list %}
+ 			<tr>
+                <td><p>{{item.client_type|type_map}}</p></td>
+                <td><p>{{ item.date|format_date }}</p></td>
+                <td><p>{{ item.amount }}</p></td>
+ 			</tr>
+ 			{% endfor %}
+ 			
+ 			 			{% else %}
+ 			<tr><td colspan="4">没有结果<br><a class="label  label-important">暂时没有发现用户,请检查数据库数据。</a>
+ 			</td></tr>
+ 			{% endif %}
+ 			
+         </tbody>
+       
+       </table>
+	
+</div>
+
+
+{% endblock %}
