@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <script src="/static/js/jquery.js"></script>
+      <script src="/static/js/base.js"></script>
+      <script src="/static/js/bootstrap-button.js"></script>
+      <script src="/static/js/jquery.jgrowl.js"></script>
+      <link href="/static/css/jquery.jgrowl.css" rel="stylesheet"  type="text/css"/>
+      <link href="/static/css/bootstrap.css" rel="stylesheet">
+      <link href="/static/css/base.css" rel="stylesheet">
+      <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+      <link rel="stylesheet" href="/static/css/docs.css" type="text/css"/>
+      <script src="/static/js/date.js"></script>
+     <script src="/static/js/daterangepicker.js"></script>
+        <link href="/static/css/daterangepicker.css" rel="stylesheet">
+      <link rel="shortcut icon" href="/static/ico/favicon.ico">
+      {% block header %}  
+       
+       {% endblock %}
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %} | Matching Algorithm with Recursively Implemented StorAge </title>
+    <meta property="wb:webmaster" content="07f4c6cc5f9cddca" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Social Product Search Engine">
+    <meta name="author" content="ericyue">
+    
+    
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  </head>
+
+<body id="top">
+    
+   <div class="navbar navbar-fixed-top" id="pagewrap">
+      
+      <div class="navbar-inner">
+          
+          <p id="back-top">
+              		<a href="#top"><span></span></a>
+          </p>
+        <div class="container-fluid">
+          <div class="nav-collapse">
+
+            <ul class="nav">
+              <li><a class="brand" align="left" href="http://180.153.228.57:2081/">Query Analyse System</a></li>
+              <li id="overview-top" class="active"><a href="http://180.153.228.57:2081/">Search</a></li>
+            </ul>
+            
+            <ul class="nav pull-right">
+                        <li class="divider-vertical"></li>
+                         {% if username %}
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                              <i class="icon-user icon-white"></i> {{username}},Welcome! <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="/auth/logout"><i class="icon-ban-circle"></i> Logout</a></li>
+                                    </ul>
+                        </li>
+                        {% else %}
+                        {% endif %}      
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+    	<div class="container-fixed">
+	      <div class="well">
+					<form action="/search">
+			        <input placeholder="keywords" value="{{keywords}}" name="keywords" type="text" class="span10" style="margin: 0 auto;height:34px;" data-provide="typeahead" data-items="4" data-source='["{{instant_search|join:'","'}}"]'/>
+             <input  name="limit" type="text" class="span1" placeholder="limit"  style="margin: 0 auto;height:34px;"/>
+                <button  style="" class="btn btn-large btn-primary pull-right" id="btn_search">Search</button>
+			</form>
+			{% if result_list.object_list %} 		
+ 			<span class="label label-success">搜索结果共有: {{result_size}}条</span> 			<span class="label label-info">共耗时: {{search_time}} 秒</span>
+
+ 			{% else %}
+ 			<span class="label label-success">搜索结果共有: 0 条</span>
+ 			<span class="label label-info">共耗时: {{search_time}} 秒</span>
+ 			{% endif %}
+	      </div>
+	
+	</div>
+    <div class="row-fluid" id="main_form">
+
+<div class="" id="right_form">
+{% block content %}  
+         
+{% endblock %} 
+</div>
+         
+    </div>
+      <hr>
+      <footer>
+        <p>&copy; <a href="http://oneboxtech.com" class="tooltip-test" title="More INFO">OneBox Technology</a> 2012</p>
+      </footer>
+
+<blockquote class="pull-right">
+    <!-- Place this render call where appropriate -->
+  <p><b> Query Analyse System.</b></p>
+  <small><cite>@ericyue</cite></small>
+</blockquote>
+
+    </div> <!-- /container -->
+    
+    <script src="/static/js/bootstrap-transition.js"></script>
+    <script src="/static/js/bootstrap-alert.js"></script>
+    <script src="/static/js/bootstrap-modal.js"></script>
+    <script src="/static/js/bootstrap-dropdown.js"></script>
+    <script src="/static/js/bootstrap-scrollspy.js"></script>
+    <script src="/static/js/bootstrap-tooltip.js"></script>
+    <script src="/static/js/bootstrap-popover.js"></script>
+    <script src="/static/js/bootstrap-collapse.js"></script>
+    <script src="/static/js/bootstrap-carousel.js"></script>
+    <script src="/static/js/highchart/highcharts.js"></script>
+    <script src="/static/js/bootstrap-typeahead.js"></script>
+    <script src="/static/js/application.js"></script>
+
+
+  </body>
+  
+</html>
