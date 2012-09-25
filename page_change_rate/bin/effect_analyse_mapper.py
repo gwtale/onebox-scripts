@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 
-# effect analysenalyse
+# top page change rate query
 # @ericyue
 # hi.moonlight@gmail.com
+
 import time
 import sys
 import os
