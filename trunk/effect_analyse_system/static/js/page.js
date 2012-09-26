@@ -125,6 +125,8 @@ function get_page_data(data){
 
 }
 $(document).ready(function(){
+key_name_str=document.getElementById("key_name").value
+$("#"+key_name_str).attr('class','active');
 			$("#change_hour").click(function(){
 				$.getJSON("/overview/get_hour_data",  
                   {key:document.getElementById("key_name").value,from:$("#hour_from").val(),to:$("#hour_to").val()
