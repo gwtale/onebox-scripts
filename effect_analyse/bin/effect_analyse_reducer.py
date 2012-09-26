@@ -53,8 +53,10 @@ def merge(line):
 
   items=line.split('\t')
   for i in range(1,6):
+    try:
       items[i]=float(items[i])
-
+    except:
+      raise Exception(items)
   if items[0]=='time_range_counts':
     fill_dict(time_range_counts,items)    
   elif items[0]=='first_click_time':
