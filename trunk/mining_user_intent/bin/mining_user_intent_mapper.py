@@ -50,7 +50,12 @@ def merge(str1):
   global current_list #store whole sessions(between the empty line) 
   global current_session
   if len(str1.split('\t'))==2:
-    analyse()
+    for i in current_list:
+      print i['query']
+    print "=============================="
+
+
+    #analyse()
     current_list=[]
     current_session={}
   else:
@@ -92,7 +97,7 @@ def all_the_same(slist):
 
 #判断传入的字符串是否都为汉字
 def all_chinese(str1):
-  if all_chinese_str.match(str1.replace(' ','')):
+  if regx_all_chinese_str.match(str1.replace(' ','')):
     return True 
   else:
     return False
@@ -297,6 +302,9 @@ def process_meaning_groups(meaning_group):
     total=[]
     se,ck,br=get_se_ck_br(g)
     total=se+ck+br
+    #若该group没有点击,则没有无效query
+    if len(ck)==0:
+      return
     total.sort(cmp=lambda x,y: cmp(float(x['date']),float(y['date'])))
     merge_meaning_groups(total)
 
@@ -317,6 +325,7 @@ def last_similarity(key,other):
     else:
       return True
 
+#准备输出
 def merge_meaning_groups(total):
   global query_click_counts
 
@@ -344,6 +353,8 @@ def merge_meaning_groups(total):
     return 
   print "%s\t%s" %(key.encode('utf-8'),value.encode('utf-8'))
 
+
+#统计点击次数
 def click_counts():
   global current_list
   global query_click_counts
@@ -355,15 +366,16 @@ def click_counts():
     elif s['action']=='ck' and s['query'] not in query_click_counts:
       query_click_counts[s['query']]=1
     
-
+#处理每个session list
 def analyse():
   global current_session
   global current_list
   current_list.sort(cmp=lambda x,y: cmp(float(x['date']),float(y['date'])))
   if len(current_list)==1:
     return False
-  if all_the_same(current_list):
-    return False
+  #if all_the_same(current_list):
+  #  return False
+  print current_list
   click_counts()
   meaning_group=divide_meaning_groups()
   process_meaning_groups(meaning_group)
