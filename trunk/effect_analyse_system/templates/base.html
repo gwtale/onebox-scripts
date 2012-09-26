@@ -57,10 +57,42 @@
     <div class="span3" id="left_form">
           <div class="well sidebar-nav">
             <ul class="nav nav-list" id="menu_left">
+<li class="nav-header">Overview</li>
+	<li id="total_search"><a href="/overview/page?key=total_click">总点击次数</a></li>
+    <li id="total_search"><a href="/overview/page?key=total_search">总搜索次数</a></li>
+<li class="nav-header">点击相关</li>
+<li id="total_search"><a href="/overview/page?key=click_rate">点击率</a></li>
+<li id="total_search"><a href="/overview/page?key=non_click_rate">无点击率</a></li>
+<li id="total_search"><a href="/overview/page?key=first_click_time">首次点击间隔</a></li>
+     
+	     	     <li class="nav-header">翻页、换query相关</li>
+      	
+	      
+<li id="total_search"><a href="/overview/page?key=page_change_rate">翻页率</a></li>
+    <li id="total_search"><a href="/overview/page?key=page_change_insearch_rate">有翻页的搜索比例</a></li>         
+             <li id="total_search"><a href="/overview/page?key=query_change_rate">Query更改率</a></li>
+	     <li class="nav-header">位置点击率相关</li>
+      	
+	           	<li id="total_search"><a href="/overview/page?key=pos1_click_rate">Pos1点击率</a></li>
+             
+	           	
+	           	<li id="total_search"><a href="/overview/page?key=pos2_click_rate">Pos2点击率</a></li>
+             
+	           	
+	           	<li id="total_search"><a href="/overview/page?key=pos3_click_rate">Pos3点击率</a></li>
+  	
+	           	<li id="total_search"><a href="/overview/page?key=top3_click_rate">Top3点击率</a></li>
+             
+	           	
+	                        
+	           	
+
+<!--
 	           {% for i in key_list%}
 	           	<li id="total_search"><a href="/overview/page?key={{i.key_name}}">{{i.key_title}}</a></li>
              
 	           	{%endfor%}
+-->
             </ul>
           </div><!--/.well -->
    </div><!--/span-->
