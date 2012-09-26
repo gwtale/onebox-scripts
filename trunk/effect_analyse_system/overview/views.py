@@ -13,16 +13,30 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+HELP={"click_rate":"点击率: 当日(或更短时间段)内的总点击次数与总搜索次数的比值。",
+"first_click_time":"首次点击时间:当日(或更短时间段)内,一次搜索行为与距离最近的一次点击行为的时间间隔,求和取平均。",
+"non_click_rate":"无点击率:当日(或更短时间段)内,搜索后无点击的比例。",
+"page_change_insearch_rate":"有翻页的搜索率:当日(或更短时间段)内,所有有翻页的搜索行为与总搜索次数的比值。",
+"page_change_rate":"翻页率:当日(或更短时间段)内,总的翻页次数与总的搜索次数的比值。",
+"pos1_click_rate":"POS1点击率:当日(或更短时间段)内,第1位搜索结果的点击率。",
+"pos2_click_rate":"POS2点击率:当日(或更短时间段)内,第2位搜索结果的点击率。",
+"pos3_click_rate":"POS3点击率:当日(或更短时间段)内,第3位搜索结果的点击率。",
+"top3_click_rate":"TOP3点击率:当日(或更短时间段)内,前3位搜索结果的点击率。",
+"query_change_rate":"Query更改率:当日(或更短时间段)内,一次搜索行为内的换query比例。",
+"total_click":"总点击次数:当日(或更短时间段)内,总的点击次数。",
+"total_search":"总搜索次数:当日(或更短时间段)内,总的搜索次数。"}
+
+
 TITLE={"click_rate":"点击率",
-"first_click_time":"第一次点击的时间间隔",
-"non_click_rate":"搜索无点击率",
-"page_change_insearch_rate":"一次搜索内的翻页率",
+"first_click_time":"首次点击间隔",
+"non_click_rate":"无点击率",
+"page_change_insearch_rate":"有翻页的搜索比例",
 "page_change_rate":"翻页率",
-"pos1_click_rate":"第一位点击率",
-"pos2_click_rate":"第二位点击率",
-"pos3_click_rate":"第三位点击率",
-"top3_click_rate":"前三位点击率",
-"query_change_rate":"QUERY更改率",
+"pos1_click_rate":"Pos1点击率",
+"pos2_click_rate":"Pos2点击率",
+"pos3_click_rate":"Pos3点击率",
+"top3_click_rate":"Top3点击率",
+"query_change_rate":"Query更改率",
 "total_click":"总点击次数",
 "total_search":"总搜索次数"}
 
@@ -48,7 +62,6 @@ def index (request):
     search_result={"baidu":[],"google":[],"qss":[],"other":[],"onebox":[]}
     date_range=set()
     cursor = connection.cursor()
-    #sql="SELECT * FROM day_total_click WHERE timestamp >= '%s' order by timestamp asc " %(during[-1])
     sql="SELECT a.*,b.* FROM item_day_values a LEFT JOIN `keys` b ON a.key_id=b.id WHERE b.key_name='total_click' and a.timestamp >= '%s' order by a.timestamp asc " % (during[-1])
 
     print sql
@@ -240,8 +253,9 @@ def page (request):
 
     key_list=get_key_list()
     title=get_title(key_name)
+    help_str=get_help(key_name)
     template = loader.get_template('page.html')
-    params= Context({"return_hour_dict":return_hour_dict,"date_range_hour":date_range_hour,"key_list":key_list,"title":title,"key_name":key_name,"during":date_range,"current_datetime":current_datetime,"return_dict":return_dict})
+    params= Context({"help":help_str,"return_hour_dict":return_hour_dict,"date_range_hour":date_range_hour,"key_list":key_list,"title":title,"key_name":key_name,"during":date_range,"current_datetime":current_datetime,"return_dict":return_dict})
     
     return HttpResponse(template.render(params))
 
@@ -294,6 +308,14 @@ def get_page(request):
 def get_title(key_name):
   if key_name in TITLE:
     return TITLE[key_name]
+  else:
+    return key_name.upper().replace('_',' ')
+
+
+
+def get_help(key_name):
+  if key_name in HELP:
+    return HELP[key_name]
   else:
     return key_name.upper().replace('_',' ')
 
