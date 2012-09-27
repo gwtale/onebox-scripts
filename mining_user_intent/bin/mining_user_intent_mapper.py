@@ -44,7 +44,7 @@ regx_query_items_str=re.compile(query_items_str)
 current_session={}
 current_list=[]
 query_click_counts={}
-
+query_search_counts={}
 #按行读入,每组存入list中
 def merge(str1):
   global current_list #store whole sessions(between the empty line) 
@@ -312,6 +312,8 @@ def last_similarity(str1,str2):
 #准备输出
 def merge_meaning_groups(total):
   global query_click_counts
+  global query_search_counts
+
   first_item=total[0]['query']
   result_set=[]
   result_set.append(first_item)
@@ -324,10 +326,21 @@ def merge_meaning_groups(total):
   value=""
   for i in result_set[1:]:
     if last_similarity(result_set[0],i):
-      value+=i+'#'+str(query_click_counts[i])+"\t"
+      value+=i+'#'+str(query_click_counts[i])+'#'+str(query_search_counts[i])+"\t"
   value=value.rstrip('\t')
   if value != '':
     print "%s\t%s" %(key.encode('utf-8'),value.encode('utf-8'))
+
+#统计搜索次数
+def search_counts():
+  global current_list
+  global query_search_counts
+  for s in current_list:
+    if s['action']=='se' and s['query'] not in query_search_counts:
+      query_search_counts[s['query']]=1
+    elif s['action']=='se' and s['query'] in query_search_counts:
+      query_search_counts[s['query']]+=1
+ 
 
 #统计点击次数
 def click_counts():
@@ -349,6 +362,7 @@ def analyse():
   if len(current_list)==1:
     return False
   click_counts()
+  search_counts()
   meaning_group=divide_meaning_groups()
   process_meaning_groups(meaning_group)
 
