@@ -144,8 +144,7 @@ $(document).ready(function(){
         },
        
         xAxis: {
-            categories: ['总点击', '总搜索', '点击率','Top3点击率','无点击率',
-                    ,'有翻页的搜索比例', '翻页率','query更改率'],
+            categories: ['点击率','Top3点击率','无点击率','首次点击间隔','有翻页的搜索比例', '翻页率','query更改率'],
             tickmarkPlacement: 'on',
             lineWidth: 0
         },
