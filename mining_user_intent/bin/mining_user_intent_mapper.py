@@ -50,12 +50,8 @@ def merge(str1):
   global current_list #store whole sessions(between the empty line) 
   global current_session
   if len(str1.split('\t'))==2:
-    for i in current_list:
-      print i['query']
-    print "=============================="
-
-
-    #analyse()
+    if len(current_list)!=0:
+      analyse()
     current_list=[]
     current_session={}
   else:
@@ -102,12 +98,10 @@ def all_chinese(str1):
   else:
     return False
 
-
 #求两个字符串的相似度
 def query_similarity(str1,str2):
   if str1=='' or str2 =='':
     return False,0
-  
   try:
     str1_list=regx_chinese_or_number_or_alphabet.findall(str1)
     str2_list=regx_chinese_or_number_or_alphabet.findall(str2)
@@ -118,7 +112,6 @@ def query_similarity(str1,str2):
   #如果不包含任何汉字、数字、字母则为无效query 
   if len(str1_list)==0 or len(str2_list)==0:
     return False,0
-  
   #去掉有不同版本信息,eg: 3.1.1
   num_version1=regx_version_str.search(str1)
   num_version2=regx_version_str.search(str2)
@@ -218,7 +211,7 @@ def query_similarity(str1,str2):
         sint.add(i)
   if len(sint)>1:
     mark= 0.3*max(len(sint)/float(len(str1)),len(sint)/float(len(str2))) + 0.7*min(len(sint)/float(len(str1)),len(sint)/float(len(str2)))
-    if mark>0.5001:
+    if mark>0.531:
       return True,mark
     else:
       return False,0
@@ -270,89 +263,66 @@ def dict_to_list(d_dic):
   return tmp
 
 #从meaning groups中按用户行为拆分成三个list
-def get_se_ck_br(group):
-  se=[]
-  ck=[]
-  br=[]
-  se_dict={}
-  ck_dict={}
-  br_dict={}
-
+def has_ck(group):
+  ck=0
   for i in group:
-    if i['action']=='se':
-      if i['query'] not in se_dict:
-        se_dict[i['query']]=i
-    elif i['action']=='ck':
-      ck_dict[i['query']]=i
-    elif i['action']=='br':
-      br_dict[i['query']]=i
-
-  se= dict_to_list(se_dict)
-  ck= dict_to_list(ck_dict)
-  br= dict_to_list(br_dict)
+    if i['action']=='ck':
+      ck+=1
+  return ck
   
-  return se,ck,br
-
 #处理meaning groups
-def process_meaning_groups(meaning_group):
-  for g in meaning_group:
-    se=[]
-    ck=[]
-    br=[]
-    total=[]
-    se,ck,br=get_se_ck_br(g)
-    total=se+ck+br
+def process_meaning_groups(group):
+  for g in group:
+    ck=has_ck(g)
     #若该group没有点击,则没有无效query
-    if len(ck)==0:
-      return
-    total.sort(cmp=lambda x,y: cmp(float(x['date']),float(y['date'])))
-    merge_meaning_groups(total)
+    if ck==0:
+      continue
+    g.sort(cmp=lambda x,y: cmp(float(x['date']),float(y['date'])))
+    merge_meaning_groups(g)
 
-#短语限定过滤
-def last_similarity(key,other):
-  if not all_chinese(other) and not all_chinese(key):
-    return True
-  key_items=key.split(' ')
-  other_items=other.split(' ')
-  if len(key_items)==1 and len(key)<=10 and len(other_items)!=1:
-    if other.find(key)!=-1:
+#判断一个query是否出现在一个list中
+def cmp_query_list(query,c_list):
+  for l in c_list:
+    if query==l:
       return True
-    else:
-      return False
-  elif len(key_items)!=1:
-    if other.find(key_items[1])==-1:
-      return False
-    else:
-      return True
+  return False
+
+#TODO:这个函数暂时没啥用，以后可能会用
+def last_similarity(str1,str2):
+  #@ericyue
+  if all_chinese(str1) and all_chinese(str2):
+    key_items=key.split(' ')
+    other_items=other.split(' ')
+    if len(key_items)==1 and len(str1)<=10 and len(other_items)!=1:
+      if other.find(str1)!=-1:
+        return True
+      else:
+        return False
+    elif len(key_items)!=1:
+      if other.find(key_items[1])==-1:
+        return False
+      else:
+        return True
 
 #准备输出
 def merge_meaning_groups(total):
   global query_click_counts
-
   first_item=total[0]['query']
-  result_set=set()
-  result_set.add(first_item)
+  result_set=[]
+  result_set.append(first_item)
   for i in total[1:]:
-    if i['query']!=first_item:
-      result_set.add(i['query'])
-  result_set=list(result_set)
-  if len(result_set)!=0:
-    pass
-    #result_set.sort(cmp=lambda x,y: cmp(len(x),len(y)))  
-  else :
+    if not cmp_query_list(i['query'],result_set):
+      result_set.append(i['query'])
+  if len(result_set)<=1:
     return
   key=result_set[0]+'#'+str(query_click_counts[result_set[0]])
   value=""
-  if len(result_set[0])<=3:
-    return
   for i in result_set[1:]:
-    if last_similarity(key,i):
+    if last_similarity(result[0],i):
       value+=i+'#'+str(query_click_counts[i])+"\t"
   value=value.rstrip('\t')
-  if value=='':
-    return 
-  print "%s\t%s" %(key.encode('utf-8'),value.encode('utf-8'))
-
+  if value != '':
+    print "%s\t%s" %(key.encode('utf-8'),value.encode('utf-8'))
 
 #统计点击次数
 def click_counts():
@@ -373,9 +343,6 @@ def analyse():
   current_list.sort(cmp=lambda x,y: cmp(float(x['date']),float(y['date'])))
   if len(current_list)==1:
     return False
-  #if all_the_same(current_list):
-  #  return False
-  print current_list
   click_counts()
   meaning_group=divide_meaning_groups()
   process_meaning_groups(meaning_group)
@@ -388,4 +355,4 @@ if __name__=="__main__":
     except EOFError:
       break
 
-
+  merge("\t")
