@@ -34,8 +34,8 @@ def sort_list(llist):
       result[query_str]["click"]+=query_click
       result[query_str]['user']+=1
 
-  #return sorted(result.iteritems(), key=lambda x:(-x[1]['user'],-x[1]['click']))
-  return sorted(result.iteritems(), key=lambda x:-fscore(0.2*x[1]['user'],0.8*x[1]['click']))
+  return sorted(result.iteritems(), key=lambda x:(-x[1]['click'],-x[1]['user']))
+  #return sorted(result.iteritems(), key=lambda x:-fscore(0.2*x[1]['user'],0.8*x[1]['click']))
 def output_session(session):
   global first_item_count
   global whole_sessions
@@ -90,6 +90,6 @@ if __name__=='__main__':
       if pi[1]['user']<2 or pi[1]['click']<2:
         continue
       else:
-        print "===>",pi[0],fscore(pi[1]['user'],pi[1]['click']),pi[1]['user'],pi[1]['click']
+        print "===>",pi[0],pi[1]['click'],pi[1]['user']
     print "---"*20
 
