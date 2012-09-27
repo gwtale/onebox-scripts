@@ -291,19 +291,24 @@ def cmp_query_list(query,c_list):
 def last_similarity(str1,str2):
   #@ericyue
   if all_chinese(str1) and all_chinese(str2):
-    key_items=key.split(' ')
-    other_items=other.split(' ')
+    key_items=str1.split(' ')
+    other_items=str2.split(' ')
     if len(key_items)==1 and len(str1)<=10 and len(other_items)!=1:
-      if other.find(str1)!=-1:
+      if str2.find(str1)!=-1:
         return True
       else:
         return False
-    elif len(key_items)!=1:
-      if other.find(key_items[1])==-1:
+    elif len(key_items)!=1 and len(other_items)==1:
+      return False
+    elif len(key_items)!=1 and len(other_items)!=1:
+      if str2.find(key_items[1])==-1:
         return False
       else:
         return True
-
+    else:
+      return True
+  else:
+    return True
 #准备输出
 def merge_meaning_groups(total):
   global query_click_counts
@@ -318,7 +323,7 @@ def merge_meaning_groups(total):
   key=result_set[0]+'#'+str(query_click_counts[result_set[0]])
   value=""
   for i in result_set[1:]:
-    if last_similarity(result[0],i):
+    if last_similarity(result_set[0],i):
       value+=i+'#'+str(query_click_counts[i])+"\t"
   value=value.rstrip('\t')
   if value != '':
