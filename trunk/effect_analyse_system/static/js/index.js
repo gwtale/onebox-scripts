@@ -122,29 +122,6 @@ function get_click_and_search_amounts(data){
 
 
 }
-$(document).ready(function(){
-	    $('#reportrange').daterangepicker(
-    {
-        ranges: {
-            'Last 7 Days': [Date.today().add({ days: -6 }), 'today'],
-            'Last 30 Days': [Date.today().add({ days: -29 }), 'today'],
-            'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
-            'Last Month': [Date.today().moveToFirstDayOfMonth().add({ months: -1 }), Date.today().moveToFirstDayOfMonth().add({ days: -1 })]
-        }
-    }, 
-    function(start, end) {
-        $('#reportrange span').html(start.toString('yyyy-MM-d') + ' -> ' + end.toString('yyyy-MM-d'));
-         $.getJSON("/overview/get_click_and_search_amounts",  
-                  {from:start.toString('yyyy-MM-d'),to:end.toString('yyyy-MM-d')
-                  },  
-                   function(data){
-                   get_click_and_search_amounts(data)
-        }); 
-
-    }
-    );
-	
-});
 var window_overview;
 $(document).ready(function() {
 
@@ -202,6 +179,30 @@ $(document).ready(function() {
     
     });
 }
+$(document).ready(function(){
+	    $('#reportrange').daterangepicker(
+    {
+        ranges: {
+            'Last 7 Days': [Date.today().add({ days: -6 }), 'today'],
+            'Last 30 Days': [Date.today().add({ days: -29 }), 'today'],
+            'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
+            'Last Month': [Date.today().moveToFirstDayOfMonth().add({ months: -1 }), Date.today().moveToFirstDayOfMonth().add({ days: -1 })]
+        }
+    }, 
+    function(start, end) {
+        $('#reportrange span').html(start.toString('yyyy-MM-d') + ' -> ' + end.toString('yyyy-MM-d'));
+         $.getJSON("/overview/get_click_and_search_amounts",  
+                  {from:start.toString('yyyy-MM-d'),to:end.toString('yyyy-MM-d')
+                  },  
+                   function(data){
+                   get_click_and_search_amounts(data)
+        }); 
+
+    }
+    );
+	
+});
+
 
     var chart1;
     $(document).ready(function() {
