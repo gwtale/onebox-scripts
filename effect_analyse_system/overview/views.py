@@ -101,9 +101,27 @@ def index (request):
     current_datetime="%s -> %s"%(str(end-timedelta(10)).split(' ')[0],str(end).split(' ')[0])
     date_range=list(date_range)
     date_range.sort()
+    
+    qss_overview=[]
+    onebox_overview=[]
+    total_keys=["total_click","total_search","click_rate","top3_click_rate","non_click_rate","first_click_time","page_change_insearch_rate","page_change_rate","query_change_rate"]
+    for key in total_keys:
+      sql="SELECT a.*,b.* FROM item_day_values a LEFT JOIN `keys` b ON a.key_id=b.id WHERE b.key_name='%s' and a.timestamp >= '%s' order by a.timestamp asc " % (key,str(datetime.now()-timedelta(1)).split()[0])
+      print sql
+      cursor.execute(sql)
+      result=dictfetchall(cursor)     
+      for i in result:
+        date_range.add(str(i['timestamp']).split(' ')[0][5:])
+        if i['engine']=='onebox':
+          onebox_overview.append(int(i['value']))
+        elif i['engine']=='qss':
+          qss_overview.append(int(i['value']))
+
+
+
     template = loader.get_template('index.html')
     key_list=get_key_list()
-    params= Context({"key_list":key_list,"during":date_range,"current_datetime":current_datetime,"click_result":click_result,"search_result":search_result})
+    params= Context({"qss_overview":qss_overview,"onebox_overview":onebox_overview,"key_list":key_list,"during":date_range,"current_datetime":current_datetime,"click_result":click_result,"search_result":search_result})
     
     
     return HttpResponse(template.render(params))

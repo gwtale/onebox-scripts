@@ -135,7 +135,7 @@ $(document).ready(function(){
         },
        
         title: {
-            text: 'Onebox vs QSS',
+            text: 'ONEBOX VS QSS (Yesterday)',
             x: -80
         },
        
@@ -144,8 +144,8 @@ $(document).ready(function(){
         },
        
         xAxis: {
-            categories: ['总点击次数', '总搜索次数', '点击率', '无点击率',
-                    'Top3点击率', '翻页率','有翻页的搜索比例','query更改率'],
+            categories: ['总点击', '总搜索', '点击率','Top3点击率','无点击率',
+                    ,'有翻页的搜索比例', '翻页率','query更改率'],
             tickmarkPlacement: 'on',
             lineWidth: 0
         },
@@ -170,11 +170,11 @@ $(document).ready(function(){
        
         series: [{
             name: 'Onebox',
-            data: [43000, 19000, 600,400, 35,4000, 17000, 10000],
+            data: JSON.parse(document.getElementById("onebox_overview").value),
             pointPlacement: 'on'
         }, {
             name: '很挫的QSS',
-            data: [50000, 39000, 42000, 310,400, 24,6000, 14000],
+            data: JSON.parse(document.getElementById("qss_overview").value),
             pointPlacement: 'on'
         }]
    
