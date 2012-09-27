@@ -22,7 +22,7 @@ class Query:
   def __init__(self):
     self.query=''
     self.click=0
-
+    self.search=0
 def sort_list(llist):
   result={}
   for query in llist:
@@ -34,7 +34,7 @@ def sort_list(llist):
       result[query_str]["click"]+=query_click
       result[query_str]['user']+=1
 
-  return sorted(result.iteritems(), key=lambda x:(-x[1]['click'],-x[1]['user']))
+  return sorted(result.iteritems(), key=lambda x:(-x[1]['user'],-x[1]['click'],-x[1]['search']))
   #return sorted(result.iteritems(), key=lambda x:-fscore(0.2*x[1]['user'],0.8*x[1]['click']))
 def output_session(session):
   global first_item_count
@@ -54,7 +54,7 @@ def merge(str1):
   query = Query()
   query.query= items[0].split('#')[0]
   query.click= items[0].split('#')[1]
-
+  query.click= items[0].split('#')[2]
   if query.query !=current_session.items()[0][0]:
     output_session(current_session)
     current_session={}
@@ -90,6 +90,6 @@ if __name__=='__main__':
       if pi[1]['user']<2 or pi[1]['click']<2:
         continue
       else:
-        print "===>",pi[0],pi[1]['click'],pi[1]['user']
+        print "===>",pi[0],pi[1]['user'],pi[1]['click'],pi[1]['search']
     print "---"*20
 
