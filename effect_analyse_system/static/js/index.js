@@ -122,63 +122,7 @@ function get_click_and_search_amounts(data){
 
 
 }
-var window_overview;
-$(document).ready(function() {
 
-    window_overview = new Highcharts.Chart({
-                
-        chart: {
-            renderTo: 'chart_overview',
-            polar: true,
-            type: 'line'
-        },
-        
-        title: {
-            text: 'Onebox vs QSS',
-            x: -80
-        },
-        
-        pane: {
-            size: '80%'
-        },
-        
-        xAxis: {
-            categories: ['总点击次数', '总搜索次数', '点击率', '无点击率', 
-                    'Top3点击率', '翻页率','有翻页的搜索比例','query更改率'],
-            tickmarkPlacement: 'on',
-            lineWidth: 0
-        },
-            
-        yAxis: {
-            gridLineInterpolation: 'polygon',
-            lineWidth: 0,
-            min: 0
-        },
-        
-        tooltip: {
-            shared: true,
-            valuePrefix: '$'
-        },
-        
-        legend: {
-            align: 'right',
-            verticalAlign: 'top',
-            y: 100,
-            layout: 'vertical'
-        },
-        
-        series: [{
-            name: 'Onebox',
-            data: [43000, 19000, 600,400, 35,4000, 17000, 10000],
-            pointPlacement: 'on'
-        }, {
-            name: '很挫的QSS',
-            data: [50000, 39000, 42000, 310,400, 24,6000, 14000],
-            pointPlacement: 'on'
-        }]
-    
-    });
-}
 $(document).ready(function(){
 	    $('#reportrange').daterangepicker(
     {
