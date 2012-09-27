@@ -123,8 +123,9 @@ function get_click_and_search_amounts(data){
 
 }
 
-$(function () {
 
+
+$(document).ready(function(){
     window.chart = new Highcharts.Chart({
                 
         chart: {
@@ -178,10 +179,6 @@ $(function () {
         }]
     
     });
-});​
-
-$(document).ready(function(){
-
 
 
 	    $('#reportrange').daterangepicker(
