@@ -126,58 +126,58 @@ function get_click_and_search_amounts(data){
 
 
 $(document).ready(function(){
-    window.chart = new Highcharts.Chart({
-                
+        window.chart = new Highcharts.Chart({
+               
         chart: {
             renderTo: 'chart_overview',
             polar: true,
             type: 'line'
         },
-        
+       
         title: {
-            text: 'Budget vs spending',
+            text: 'Onebox vs QSS',
             x: -80
         },
-        
+       
         pane: {
             size: '80%'
         },
-        
+       
         xAxis: {
-            categories: ['Sales', 'Marketing', 'Development', 'Customer Support', 
-                    'Information Technology', 'Administration'],
+            categories: ['总点击次数', '总搜索次数', '点击率', '无点击率',
+                    'Top3点击率', '翻页率','有翻页的搜索比例','query更改率'],
             tickmarkPlacement: 'on',
             lineWidth: 0
         },
-            
+           
         yAxis: {
             gridLineInterpolation: 'polygon',
             lineWidth: 0,
             min: 0
         },
-        
+       
         tooltip: {
             shared: true,
             valuePrefix: '$'
         },
-        
+       
         legend: {
             align: 'right',
             verticalAlign: 'top',
             y: 100,
             layout: 'vertical'
         },
-        
+       
         series: [{
-            name: 'Allocated Budget',
-            data: [43000, 19000, 60000, 35000, 17000, 10000],
+            name: 'Onebox',
+            data: [43000, 19000, 600,400, 35,4000, 17000, 10000],
             pointPlacement: 'on'
         }, {
-            name: 'Actual Spending',
-            data: [50000, 39000, 42000, 31000, 26000, 14000],
+            name: '很挫的QSS',
+            data: [50000, 39000, 42000, 310,400, 24,6000, 14000],
             pointPlacement: 'on'
         }]
-    
+   
     });
 
 
