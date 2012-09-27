@@ -87,6 +87,9 @@ if __name__=='__main__':
     processed=i['session'].items()[0][1]
     p_order=sort_list(processed)
     for pi in p_order:
-      print "===>",pi[0],fscore(pi[1]['user'],pi[1]['click']),pi[1]['user'],pi[1]['click']
+      if pi[1]['user']<2 or pi[1]['click']<2:
+        continue
+      else:
+        print "===>",pi[0],fscore(pi[1]['user'],pi[1]['click']),pi[1]['user'],pi[1]['click']
     print "---"*20
 
