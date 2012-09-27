@@ -147,8 +147,8 @@ $(document).ready(function(){
 });
 
 
-
-    window.chart = new Highcharts.Chart({
+var window;
+    window = new Highcharts.Chart({
                 
         chart: {
             renderTo: 'chart_overview',
