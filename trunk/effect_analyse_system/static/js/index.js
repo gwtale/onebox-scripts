@@ -145,10 +145,10 @@ $(document).ready(function(){
     );
 	
 });
-var window;
+var window_overview;
 $(document).ready(function() {
 
-    window = new Highcharts.Chart({
+    window_overview = new Highcharts.Chart({
                 
         chart: {
             renderTo: 'chart_overview',
