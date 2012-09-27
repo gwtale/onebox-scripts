@@ -35,7 +35,7 @@ def sort_list(llist):
       result[query_str]['user']+=1
 
   #return sorted(result.iteritems(), key=lambda x:(-x[1]['user'],-x[1]['click']))
-  return sorted(result.iteritems(), key=lambda x:fscore(-x[1]['user'],-x[1]['click']))
+  return sorted(result.iteritems(), key=lambda x:-fscore(x[1]['user'],x[1]['click']))
 def output_session(session):
   global first_item_count
   global whole_sessions
