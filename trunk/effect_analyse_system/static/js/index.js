@@ -145,9 +145,9 @@ $(document).ready(function(){
     );
 	
 });
-
-$(document).ready(function() {
 var window;
+$(document).ready(function() {
+
     window = new Highcharts.Chart({
                 
         chart: {
