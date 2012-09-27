@@ -22,7 +22,6 @@ class Query:
   def __init__(self):
     self.query=''
     self.click=0
-    self.search=0
 
 def sort_list(llist):
   result={}
@@ -35,14 +34,17 @@ def sort_list(llist):
       result[query_str]["click"]+=query_click
       result[query_str]['user']+=1
 
-  return sorted(result.iteritems(), key=lambda x:(-x[1]['user'],-x[1]['click']))
-
+  #return sorted(result.iteritems(), key=lambda x:(-x[1]['user'],-x[1]['click']))
+  return sorted(result.iteritems(), key=lambda x:fscore(-x[1]['user'],-x[1]['click']))
 def output_session(session):
   global first_item_count
   global whole_sessions
   if first_item_count==1:
     return
   whole_sessions.append({"session":session,"counts":first_item_count})
+
+def fscore(m1,m2):
+  return 2*m1*m1/float((m1+m2))
 
 def merge(str1):
   global current_session
@@ -85,6 +87,6 @@ if __name__=='__main__':
     processed=i['session'].items()[0][1]
     p_order=sort_list(processed)
     for pi in p_order:
-      print "===>",pi[0],pi[1]['user'],pi[1]['click']
+      print "===>",pi[0],fscore(pi[1]['user'],pi[1]['click']),pi[1]['user'],pi[1]['click']
     print "---"*20
 
