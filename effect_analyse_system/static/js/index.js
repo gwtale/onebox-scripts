@@ -172,7 +172,7 @@ $(document).ready(function(){
             data: JSON.parse(document.getElementById("onebox_overview").value),
             pointPlacement: 'on'
         }, {
-            name: '很挫的QSS',
+            name: 'QSS',
             data: JSON.parse(document.getElementById("qss_overview").value),
             pointPlacement: 'on'
         }]
