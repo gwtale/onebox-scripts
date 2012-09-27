@@ -146,7 +146,7 @@ $(document).ready(function(){
 	
 });
 
-
+$(document).ready(function() {
 var window;
     window = new Highcharts.Chart({
                 
@@ -201,7 +201,7 @@ var window;
         }]
     
     });
-
+}
 
     var chart1;
     $(document).ready(function() {
