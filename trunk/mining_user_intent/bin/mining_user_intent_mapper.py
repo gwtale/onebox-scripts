@@ -296,6 +296,8 @@ def smaller_item_in_query(str1):
 
 def last_similarity(head,str2):
   #@ericyue
+  if head.find(' ')==-1 or  str2.find(' ')==-1:
+    return True
   if all_chinese(head) and all_chinese(str2):
     key_items=head.split(' ')
     other_items=str2.split(' ')
@@ -335,10 +337,10 @@ def merge_meaning_groups(total):
       result_set.append(i['query'])
   if len(result_set)<=1:
     return
-  #try:
-  key=result_set[0]+'\t'+str(query_click_counts[result_set[0]])+'#'+str(query_search_counts[result_set[0]])
-  #except:
-    #key=result_set[0]+'\t'+str(query_click_counts[result_set[0]])+'#0'
+  try:
+    key=result_set[0]+'\t'+str(query_click_counts[result_set[0]])+'#'+str(query_search_counts[result_set[0]])
+  except:
+    key=result_set[0]+'\t'+str(query_click_counts[result_set[0]])+'#0'
   value=""
   for i in result_set[1:]:
     if last_similarity(result_set[0],i):
