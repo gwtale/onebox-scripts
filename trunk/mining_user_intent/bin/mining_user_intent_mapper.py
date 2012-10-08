@@ -287,14 +287,13 @@ def cmp_query_list(query,c_list):
       return True
   return False
 
-#TODO:这个函数暂时没啥用，以后可能会用
-def last_similarity(str1,str2):
+def last_similarity(head,str2):
   #@ericyue
-  if all_chinese(str1) and all_chinese(str2):
-    key_items=str1.split(' ')
+  if all_chinese(head) and all_chinese(str2):
+    key_items=head.split(' ')
     other_items=str2.split(' ')
-    if len(key_items)==1 and len(str1)<=10 and len(other_items)!=1:
-      if str2.find(str1)!=-1:
+    if len(key_items)==1 and len(head)<=10 and len(other_items)!=1:
+      if str2.find(head)!=-1:
         return True
       else:
         return False
