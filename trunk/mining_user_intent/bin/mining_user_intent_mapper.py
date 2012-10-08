@@ -16,7 +16,7 @@ import re
 regx=r"[0-9]{1,4}-[0-9]{1,11}|[0-9]{11}|www|com|net|cn|org|http|\b[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"
 skip=re.compile(regx)
 
-all_chinese_str=ur"[\u4e00-\u9fa5]+"
+all_chinese_str=ur"[\u4e00-\u9fa5 ]+"
 regx_all_chinese_str=re.compile(all_chinese_str)
 
 chinese_or_number_or_alphabet=ur"[\u4e00-\u9fa5]+|[0-9]+|[a-zA-Z]+"
@@ -287,6 +287,13 @@ def cmp_query_list(query,c_list):
       return True
   return False
 
+def smaller_item_in_query(str1):
+  small=str1[0]
+  for i in str1[1:]:
+    if len(small)>len(i):
+      small=i
+  return small
+
 def last_similarity(head,str2):
   #@ericyue
   if all_chinese(head) and all_chinese(str2):
@@ -294,19 +301,26 @@ def last_similarity(head,str2):
     other_items=str2.split(' ')
     if len(key_items)==1 and len(head)<=10 and len(other_items)!=1:
       if str2.find(head)!=-1:
+        #print "1"
         return True
       else:
+        #print "2"
         return False
     elif len(key_items)!=1 and len(other_items)==1:
+      #print "3"
       return False
     elif len(key_items)!=1 and len(other_items)!=1:
-      if str2.find(key_items[1])==-1:
+      if str2.find(smaller_item_in_query(key_items))==-1:
+        #print "4"
         return False
       else:
+        #print "5"
         return True
     else:
+      #print "6"
       return True
   else:
+    #print "7"
     return True
 #准备输出
 def merge_meaning_groups(total):
