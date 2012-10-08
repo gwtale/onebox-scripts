@@ -37,7 +37,11 @@ def alert(alert_content):
     res = urllib2.urlopen(req).read()
 
 if __name__ == "__main__":
-  DEBUG_DAY=1
+  try:
+    DEBUG_DAY=int(sys.argv[1])
+  except:
+    DEBUG_DAY=1
+
   today = str(datetime.now()-timedelta(DEBUG_DAY)).split(' ')[0]
   hadoop_timeout = 600
   print 'start day:',today
@@ -64,7 +68,7 @@ if __name__ == "__main__":
           " -file " + binpath +"mining_user_intent_mapper.py " + \
           " -file " + binpath + "mining_user_intent_reducer.py " + \
           " -file " + confpath + "config.py"  + \
-          " -jobconf mapred.reduce.tasks=10 " + \
+          " -jobconf mapred.reduce.tasks=50 " + \
           " -jobconf mapred.job.name=\"mining_user_intent_"+today+"\""  +\
           " -jobconf mapred.job.priority=NORMAL" +\
           " -cacheArchive 'hdfs://n01.dong.shgt.qihoo.net:9000/user/yuebin/suffixtree.tar.gz#suffixtree' "
