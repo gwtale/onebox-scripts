@@ -5,14 +5,14 @@ import urllib2
 import os.path
 import sys
 import getopt
-sys.path.append('/home/yuebin/effect_analyse/conf')
+sys.path.append('/home/yuebin/onebox-scripts/page_change_rate/conf')
 import config
 from datetime import *
 
 hadoop_streaming_file = "/home/yuebin/.hadoop/hadoop/contrib/streaming/hadoop-0.20.1.11-fb-streaming.jar"
 hadoop_home_path = "~/.hadoop/hadoop/"
 
-homepath = '/home/yuebin/effect_analyse/'
+homepath = '/home/yuebin/onebox-scripts/page_change_rate/'
 binpath = homepath + '/bin/'
 confpath = homepath + '/conf/'
 datapath = homepath+'/' 
@@ -49,17 +49,13 @@ if __name__ == "__main__":
   end = datetime.now()-timedelta(DEBUG_DAY)
   for i in range(0,1):
     tmp_date=end-timedelta(i)
-    TMP_P=" /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/session/ "
-    if config.has_hadoop_dir(TMP_P):
-      INPUT_PATH+=TMP_P
-
     TMP_P=" /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/one-segsession/ "
     if config.has_hadoop_dir(TMP_P):
       INPUT_PATH+=TMP_P
   if INPUT_PATH.strip()=='':
     print "ERROR INPUT"
     exit()
-  OUTPUT_PATH='/user/yuebin/hadoop/effect_analyse/%s.st' %(today.replace('-',''))
+  OUTPUT_PATH='/user/yuebin/hadoop/top_page_change_query/%s.st' %(str(tmp_date).split(' ')[0].replace('-',''))
   print "INPUT PATH:",INPUT_PATH
   print "OUTPUT PATH",OUTPUT_PATH
   ret = 0
@@ -71,7 +67,7 @@ if __name__ == "__main__":
           " -file " + binpath +"effect_analyse_mapper.py " + \
           " -file " + binpath + "effect_analyse_reducer.py " + \
           " -file " + confpath + "config.py"  + \
-          " -jobconf mapred.reduce.tasks=1 " + \
+          " -jobconf mapred.reduce.tasks=5 " + \
          " -jobconf mapred.min.split.size=%d " %(10000*1000*1000) + \
          " -jobconf mapred.job.name=\"top_page_change_query_"+today+"\" "  +\
           " -jobconf mapred.job.priority=NORMAL" +\
@@ -79,5 +75,5 @@ if __name__ == "__main__":
   print command
   ret = config.run_hadoop_retry(command,OUTPUT_PATH)
   if ret!=0:
-    alert("output top page_change query job faild")
+    alert("top page_change query faild")
 

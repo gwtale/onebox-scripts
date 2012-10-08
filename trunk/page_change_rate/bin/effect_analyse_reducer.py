@@ -12,7 +12,7 @@ def merge(str1):
   query = items[0]
   search=int(items[1])
   page=int(items[2])
-  if total_query not in total_query:
+  if query not in total_query:
     total_query[query]={"search":0,"page":0,"rate":0.0}
   total_query[query]['search']+=search
   total_query[query]['page']+=page

@@ -322,11 +322,17 @@ def merge_meaning_groups(total):
       result_set.append(i['query'])
   if len(result_set)<=1:
     return
-  key=result_set[0]+'#'+str(query_click_counts[result_set[0]])
+  try:
+    key=result_set[0]+'#'+str(query_click_counts[result_set[0]])+'#'+str(query_search_counts[i])
+  except:
+    key=result_set[0]+'#'+str(query_click_counts[result_set[0]])+'#0'
   value=""
   for i in result_set[1:]:
     if last_similarity(result_set[0],i):
-      value+=i+'#'+str(query_click_counts[i])+'#'+str(query_search_counts[i])+"\t"
+      try:
+        value+=i+'#'+str(query_click_counts[i])+'#'+str(query_search_counts[i])+"\t"
+      except:
+        value+=i+'#'+str(query_click_counts[i])+"#0\t"
   value=value.rstrip('\t')
   if value != '':
     print "%s\t%s" %(key.encode('utf-8'),value.encode('utf-8'))

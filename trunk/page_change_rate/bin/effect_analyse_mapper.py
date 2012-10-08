@@ -7,7 +7,7 @@ import os
 import json
 
 middle_result={}
-
+current_session={}
 def inc_counts(session):
   global middle_result
   if session['query'] not in middle_result:
@@ -19,12 +19,8 @@ def inc_counts(session):
     middle_result[session['query']]['page']+=1  
 
 def merge(str1):
-  
-  global current_list #store whole sessions(between the empty line) 
   global current_session
-
   if len(str1.split('\t'))==2:
-    current_list=[]
     current_session={}
   else:
     items=str1.split('\t')
@@ -35,7 +31,6 @@ def merge(str1):
     current_session['query']=items[2]
     current_session['action']=items[3]
     current_session['page']=int(items[6])
-    current_list.append(current_session)
     
     inc_counts(current_session)
     current_session={}
