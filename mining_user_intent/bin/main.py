@@ -67,7 +67,7 @@ if __name__ == "__main__":
           " -reducer \" python mining_user_intent_reducer.py \" " +\
           " -file " + binpath +"mining_user_intent_mapper.py " + \
           " -file " + binpath + "mining_user_intent_reducer.py " + \
-          " -jobconf mapred.min.split.size=%d " %(10000*1000*1000) + \
+          " -jobconf mapred.min.split.size=%d " %(1000*1000*1000) + \
           " -file " + confpath + "config.py"  + \
           " -jobconf mapred.reduce.tasks=50 " + \
           " -jobconf mapred.job.name=\"mining_user_intent_"+today+"\""  +\

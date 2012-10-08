@@ -86,6 +86,9 @@ if __name__=='__main__':
       break
   whole_sessions.sort(cmp=lambda x,y: cmp(x['counts'],y['counts']),reverse=True)
   for i in whole_sessions:
+    processed=i['session'].items()[0][1]
+    if len(processed)<1:
+      continue
     print i['session'].items()[0][0],i['counts']
     processed=i['session'].items()[0][1]
     p_order=sort_list(processed)
