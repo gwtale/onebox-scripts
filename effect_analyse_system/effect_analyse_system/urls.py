@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
+    #url(r'^$', 'overview.views.unavailable', name='home'), 
     url(r'^$', 'overview.views.index', name='home'),
     url(r'^overview/get_click_and_search_amounts$', 'overview.views.get_click_and_search_amounts', name='get_click_and_search_amounts'),
 

@@ -28,8 +28,9 @@ def sort_list(llist):
   for query in llist:
     query_str=query.split('#')[0]
     query_click=int(query.split('#')[1])
+    query_search=int(query.split('#')[2])
     if query_str not in result:
-      result[query_str]={"click":query_click,"user":1}
+      result[query_str]={"click":query_click,"user":1,"search":query_search}
     else:
       result[query_str]["click"]+=query_click
       result[query_str]['user']+=1
@@ -53,8 +54,8 @@ def merge(str1):
   items = str1.split("\t")
   query = Query()
   query.query= items[0].split('#')[0]
-  query.click= items[0].split('#')[1]
-  query.click= items[0].split('#')[2]
+  query.click= float(items[0].split('#')[1])
+  query.search= float(items[0].split('#')[2])
   if query.query !=current_session.items()[0][0]:
     output_session(current_session)
     current_session={}

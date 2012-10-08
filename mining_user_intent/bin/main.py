@@ -12,7 +12,7 @@ from datetime import *
 hadoop_streaming_file = "/home/yuebin/.hadoop/hadoop/contrib/streaming/hadoop-0.20.1.11-fb-streaming.jar"
 hadoop_home_path = "~/.hadoop/hadoop/"
 
-homepath = '/home/yuebin/onebox-scritps/mining_user_intent/'
+homepath = '/home/yuebin/onebox-scripts/mining_user_intent/'
 binpath = homepath + '/bin/'
 confpath = homepath + '/conf/'
 datapath = homepath+'/' 
@@ -45,7 +45,13 @@ if __name__ == "__main__":
   end = datetime.now()-timedelta(DEBUG_DAY)
   for i in range(0,1):
     tmp_date=end-timedelta(i)
-    INPUT_PATH+= " /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/session/ "
+    TMP_P= " /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/session/ "
+    if config.has_hadoop_dir(TMP_P):
+      INPUT_PATH+=TMP_P
+    TMP_P= " /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/one-segsession/ "
+    if config.has_hadoop_dir(TMP_P):
+      INPUT_PATH+=TMP_P
+
   OUTPUT_PATH='/user/yuebin/hadoop/mining_user_intent/%s.st' %(today.replace('-',''))
   print "INPUT PATH:",INPUT_PATH
   print "OUTPUT PATH",OUTPUT_PATH
@@ -58,7 +64,7 @@ if __name__ == "__main__":
           " -file " + binpath +"mining_user_intent_mapper.py " + \
           " -file " + binpath + "mining_user_intent_reducer.py " + \
           " -file " + confpath + "config.py"  + \
-          " -jobconf mapred.reduce.tasks=1 " + \
+          " -jobconf mapred.reduce.tasks=10 " + \
           " -jobconf mapred.job.name=\"mining_user_intent_"+today+"\""  +\
           " -jobconf mapred.job.priority=NORMAL" +\
           " -cacheArchive 'hdfs://n01.dong.shgt.qihoo.net:9000/user/yuebin/suffixtree.tar.gz#suffixtree' "

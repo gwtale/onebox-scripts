@@ -51,6 +51,24 @@ def get_key_list():
   key_list.sort()
   return key_list
 
+def limit_to_1(ll):
+  for i in range(len(ll)):
+    if ll[i]>100:
+      ll[i]=ll[i]/100000000.0
+    elif ll[i]>5:
+      ll[i]=ll[i]/100
+    elif ll[i]>1:
+      ll[i]=ll[i]/10
+    elif ll[i]<0.1:
+      ll[i]=ll[i]*10
+def enlarge(ll1,ll2):
+  for i in range(len(ll1)):
+    if ll1[i]>ll2[i]:
+      ll1[i]*=3.0
+      ll2[i]*=1.5
+    else:
+      ll2[i]*=3.0
+      ll1[i]*=1.5
 def index (request):
     during=[]
     end = datetime.now()
@@ -104,20 +122,27 @@ def index (request):
     
     qss_overview=[]
     onebox_overview=[]
-    total_keys=["total_click","total_search","click_rate","top3_click_rate","non_click_rate","first_click_time","page_change_insearch_rate","page_change_rate","query_change_rate"]
+    total_keys=["click_rate","top3_click_rate","non_click_rate","first_click_time","page_change_insearch_rate","page_change_rate","query_change_rate"]
     for key in total_keys:
       sql="SELECT a.*,b.* FROM item_day_values a LEFT JOIN `keys` b ON a.key_id=b.id WHERE b.key_name='%s' and a.timestamp >= '%s' order by a.timestamp asc " % (key,str(datetime.now()-timedelta(1)).split()[0])
       print sql
       cursor.execute(sql)
       result=dictfetchall(cursor)     
       for i in result:
-        date_range.add(str(i['timestamp']).split(' ')[0][5:])
         if i['engine']=='onebox':
-          onebox_overview.append(int(i['value']))
+          onebox_value=float(i['value'])
+          onebox_overview.append(onebox_value)
         elif i['engine']=='qss':
-          qss_overview.append(int(i['value']))
+          qss_value=float(i['value'])
+          qss_overview.append(qss_value)
 
-
+    print qss_overview
+    print onebox_overview
+    limit_to_1(qss_overview)
+    limit_to_1(onebox_overview)
+    enlarge(onebox_overview,qss_overview)
+    print qss_overview
+    print onebox_overview
 
     template = loader.get_template('index.html')
     key_list=get_key_list()
