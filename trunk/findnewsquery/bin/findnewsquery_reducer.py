@@ -27,7 +27,6 @@ counts = []
 current_word=''
 found_result_tree={}
 #ouput dicts
-chain_marks={}
 inc_marks={}
 reverse_marks={}
 DELAY=1
@@ -58,6 +57,7 @@ def merge(str1):
   global counts
   global pre_reverse_query
   global today_click_counts
+
   str1=str1.rstrip("\n")
   items = str1.split("\t")
   keyword = items[0]
@@ -70,10 +70,6 @@ def merge(str1):
       counts.sort()
       converterd_counts=convert_counts(counts)
       if calc_increase_rate(current_word,converterd_counts):
-        pass
-        #print "i debug==>",current_word,converterd_counts
-      elif chain_average_v2(current_word,converterd_counts):
-        #print "c debug==>",current_word,converterd_counts
         pass
       else:
         pre_reverse_query[current_word]=converterd_counts
@@ -92,41 +88,12 @@ def reverse_v2():
         reverse_marks[i]=[inc_marks[inc][0]*0.8,pre_reverse_query[i]]
         flag=True
         break
-    if flag:
-      continue
-    for ch in chain_marks:
-      if i.find(ch)!=-1:
-        reverse_marks[i]=[chain_marks[ch][0]*0.8,pre_reverse_query[i]]
-        break
 
 def convert_counts(count):
   tmp=[]
   for i in count:
     tmp.append(float(i.split('\t')[1]))
   return tmp
-
-def chain_rate_part(data):
-  sum_data=sum(data)
-  last_data=sum(data[len(data)/2:])
-  item_rate=last_data/float(sum_data)
-  return item_rate
-def chain_average_v2(word,data):
-  global chain_marks
-  global total_average_rate
-  if average(data)<30:
-    return False
-  last_data=sum(data[len(data)/2:])
-  before_data=sum(data[:len(data)/2])
-  if before_data==0:
-    before_data=1
-  item_rate=(last_data-before_data)/float(before_data)
-  #marks=(item_rate-0.5)/float((500-5))
-  marks=item_rate
-  if marks>1.0:
-    chain_marks[word]=[marks,data]
-    return True
-  else:
-    return False
 
 def calc_increase_rate(word,data):
   inc_rate_tmp=[]
@@ -215,24 +182,7 @@ def standard_deviation(vlist):
   for i in vlist:
     dsum+= float(i-avg)*float(i-avg)
   return math.sqrt(dsum/float(total))
-def limit_to_1(mark,mode=False):
-  if mode==False and mark>=30:
-    mark=0.9+math.log(mark)/100.0
-    if mark>1:
-      mark=1
-    return mark
-  elif mode==False and mark<30:
-    mark=(mark-0.5)/(30-0.5)
-    return mark
-  if mode:
-    if mark>110:
-      mark=0.9+math.log(mark)/100.0
-      return mark
-    else:
-      mark=(mark-0.3)/float((110-0.3))
-      if mark>1:
-        mark=1
-      return mark
+
 
 def average(vlist):
   total=len(vlist)
@@ -245,6 +195,7 @@ def average(vlist):
   except:
     raise Exception(vlist,tsum,total)
   return r
+
 def sortdict(adict):
   return sorted(adict.iteritems(), key=itemgetter(1), reverse=True)
 
@@ -270,14 +221,10 @@ if __name__=='__main__':
     reverse_v2()
     inc_marks=sortdict(inc_marks)
     for i in inc_marks:
-      print "%s\t%s\t%s\t%s" % ('i',i[0],limit_to_1(i[1][0]),i[1][1])
+      print "%s\t%s\t%s\t%s" % ('i',i[0],i[1][0],i[1][1])
     
-    chain_marks=sortdict(chain_marks)
-    for i in chain_marks:
-      print "%s\t%s\t%s\t%s" % ('c',i[0],limit_to_1(i[1][0],True),i[1][1])
-    #print "r len",len(reverse_marks)
     reverse_marks=sortdict(reverse_marks)
     for i in reverse_marks:
-      print "%s\t%s\t%s\t%s" % ('r',i[0],limit_to_1(i[1][0]),i[1][1])
+      print "%s\t%s\t%s\t%s" % ('r',i[0],i[1][0],i[1][1])
   
 
