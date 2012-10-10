@@ -112,6 +112,7 @@ def calc_increase_rate(word,data):
     if DEBUG:
       print "CV too low,break!"
     return False
+  FAKE_INC=False
   for i in range(len(data)):
     query_counts_before=float(data[i])
     if query_counts_before==0.0:
@@ -131,33 +132,37 @@ def calc_increase_rate(word,data):
       if i < len(data)-2:
         if DEBUG:
           print "increase -,not in two days"
-        inc_rate_tmp.append((math.pow((len(data)),2))*(rate))
+        inc_rate_tmp.append((math.pow(3,i))*(rate))
       else:
         if DEBUG:
           print "increase -,in two days"
-        inc_rate_tmp.append((-1)*math.pow(1.15,(i+1))*abs(rate))
+        inc_rate_tmp.append(math.pow(2,(i+1))*rate)
     else:
       if i < len(data)-2:
         if DEBUG:
-          print "increase +,not in two days"
-        inc_rate_tmp.append((math.pow((len(data)),2.75))*rate)
+          print "increase +,not in two days",i
+        inc_rate_tmp.append((math.pow(i+1,2)*rate))
       else:
         if DEBUG:
           print "increase +,in two days"
         if len(data)>2:
           max_before=max(data[:len(data)-2])
-          fake_rate=(query_counts_last-max_before)/max_before
+          if query_counts_last>max_before:
+            fake_rate=(query_counts_last-max_before)/max_before
+          else:
+            fake_rate=(query_counts_last-max_before)/query_counts_last
         else:
           fake_rate=2
         if DEBUG:
           print "fake rate:",fake_rate
-        if fake_rate<0.0 or abs(fake_rate)<1.5:
+        if abs(fake_rate)<0.9:
           if DEBUG:
             print "fake increase,downgrade the marks"
-          inc_rate_tmp.append(rate/50.0)
+          FAKE_INC=True
+          inc_rate_tmp.append(rate)
         else:
           if rate>0.3:
-            inc_rate_tmp.append(math.pow(1.21,(i+1))*rate)
+            inc_rate_tmp.append(math.pow((i+1),3)*rate)
           else:
             inc_rate_tmp.append(rate)
 
@@ -165,9 +170,15 @@ def calc_increase_rate(word,data):
     print inc_rate_tmp
     print "sum of above:",sum(inc_rate_tmp)
     print "sum click counts",sum_counts
-  if sum(inc_rate_tmp)>0.290 :
-    limit_to1=sum(inc_rate_tmp)*query_counts[-1]
-    inc_marks[word]=[limit_to1,data,inc_rate_tmp,sum(inc_rate_tmp)]
+  all_sum=sum(inc_rate_tmp)
+  if all_sum<0:
+    return False
+  if FAKE_INC:
+    all_sum=sum(inc_rate_tmp)/math.pow(3,len(data))
+    print "fake inc,downgrade to ",all_sum
+  if all_sum>0.290 :
+    limit_to1=all_sum*query_counts[-1]
+    inc_marks[word]=[limit_to1,data,inc_rate_tmp,all_sum]
     return True
   else:
     return False
