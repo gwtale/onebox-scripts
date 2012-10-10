@@ -47,7 +47,7 @@ if __name__ == "__main__":
   print 'start day:',today
     
   end = datetime.now()-timedelta(DEBUG_DAY)
-  for i in range(0,5):
+  for i in range(0,9):
     tmp_date=end-timedelta(i)
     TMP_P=" /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/querylog.st/ "
     if config.has_hadoop_dir(TMP_P):
