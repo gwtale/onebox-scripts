@@ -92,7 +92,7 @@ def reverse_v2():
 def convert_counts(count):
   tmp=[]
   for i in count:
-    tmp.append(float(i.split('\t')[1])*i.split('\t')[2])
+    tmp.append(float(i.split('\t')[1]))
   return tmp
 
 def calc_increase_rate(word,data):
@@ -155,7 +155,7 @@ def calc_increase_rate(word,data):
           fake_rate=2
         if DEBUG:
           print "fake rate:",fake_rate
-        if abs(fake_rate)<0.9:
+        if fake_rate<0.9:
           if DEBUG:
             print "fake increase,downgrade the marks"
           FAKE_INC=True
@@ -175,8 +175,9 @@ def calc_increase_rate(word,data):
     return False
   if FAKE_INC:
     all_sum=sum(inc_rate_tmp)/math.pow(3,len(data))
-    print "fake inc,downgrade to ",all_sum
-  if all_sum>0.290 :
+    if DEBUG:
+      print "fake inc,downgrade to ",all_sum
+  if all_sum>10 :
     limit_to1=all_sum*query_counts[-1]
     inc_marks[word]=[limit_to1,data,inc_rate_tmp,all_sum]
     return True
