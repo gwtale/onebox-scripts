@@ -92,7 +92,7 @@ def reverse_v2():
 def convert_counts(count):
   tmp=[]
   for i in count:
-    tmp.append(float(i.split('\t')[1]))
+    tmp.append(float(i.split('\t')[1])*i.split('\t')[2])
   return tmp
 
 def calc_increase_rate(word,data):
@@ -132,7 +132,7 @@ def calc_increase_rate(word,data):
       if i < len(data)-2:
         if DEBUG:
           print "increase -,not in two days"
-        inc_rate_tmp.append((math.pow(3,i))*(rate))
+        inc_rate_tmp.append((math.pow(3,i+1))*(rate))
       else:
         if DEBUG:
           print "increase -,in two days"
