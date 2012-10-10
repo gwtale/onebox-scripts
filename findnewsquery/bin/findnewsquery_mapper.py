@@ -46,6 +46,6 @@ while True :
       continue
     if word!='':
       search_counts = 0.5*float(items[1])+1.85*float(items[2])
-      print "%s\t%s\t%s\t%s" % ( word,date,int(search_counts)+1,items[2]/float(items[1]) )
+      print "%s\t%s\t%s" % ( word,date,int(search_counts)+1)
   except EOFError:
     break
