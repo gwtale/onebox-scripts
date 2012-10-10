@@ -26,8 +26,9 @@ def alert(alert_content):
     raise Exception(req,res)
 regx=r"[0-9]{11}|www|com|net|cn|org|http|成人|av|\b[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"
 skip=re.compile(regx)
-#main 
 
+all_nums=r"^[0-9]+$"
+all_nums_regx=re.compile(all_nums)
 try:
   path=os.environ['map_input_file']
   date=path.split("clickmodel/")[1].split("/querylog.st")[0][4:]
@@ -41,10 +42,10 @@ while True :
     word = items[0].strip()
     if len(word)<=3:
       continue
-    if skip.search(word):
+    if skip.search(word) or all_nums_regx.match(word):
       continue
     if word!='':
-      search_counts = items[1]
-      print "%s\t%s\t%s" % ( word,date,search_counts )
+      search_counts = 0.5*float(items[1])+1.85*float(items[2])
+      print "%s\t%s\t%s" % ( word,date,int(search_counts)+1 )
   except EOFError:
     break

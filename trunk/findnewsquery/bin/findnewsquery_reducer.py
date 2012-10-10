@@ -108,7 +108,7 @@ def calc_increase_rate(word,data):
   cv=calc_CV(query_counts)
   if DEBUG:
     print "CV:",cv
-  if cv<0.331:
+  if cv<0.231:
     if DEBUG:
       print "CV too low,break!"
     return False
@@ -131,7 +131,7 @@ def calc_increase_rate(word,data):
       if i < len(data)-2:
         if DEBUG:
           print "increase -,not in two days"
-        inc_rate_tmp.append((-1.0/math.pow((len(data)-i),2))*abs(rate))
+        inc_rate_tmp.append((math.pow((len(data)),2))*(rate))
       else:
         if DEBUG:
           print "increase -,in two days"
@@ -140,7 +140,7 @@ def calc_increase_rate(word,data):
       if i < len(data)-2:
         if DEBUG:
           print "increase +,not in two days"
-        inc_rate_tmp.append((1.0/math.pow((len(data)-i),2.75))*rate)
+        inc_rate_tmp.append((math.pow((len(data)),2.75))*rate)
       else:
         if DEBUG:
           print "increase +,in two days"
@@ -166,8 +166,8 @@ def calc_increase_rate(word,data):
     print "sum of above:",sum(inc_rate_tmp)
     print "sum click counts",sum_counts
   if sum(inc_rate_tmp)>0.290 :
-    limit_to1=sum(inc_rate_tmp)*math.log10(sum_counts)
-    inc_marks[word]=[limit_to1,data]
+    limit_to1=sum(inc_rate_tmp)*query_counts[-1]
+    inc_marks[word]=[limit_to1,data,inc_rate_tmp,sum(inc_rate_tmp)]
     return True
   else:
     return False
@@ -218,13 +218,13 @@ if __name__=='__main__':
       except EOFError:
         break
     
-    reverse_v2()
+    #reverse_v2()
     inc_marks=sortdict(inc_marks)
     for i in inc_marks:
-      print "%s\t%s\t%s\t%s" % ('i',i[0],i[1][0],i[1][1])
+      print "%s\t%s\t%s\t%s\t%s\t%s" % ('i',i[0],i[1][0],i[1][1],i[1][2],i[1][3])
     
-    reverse_marks=sortdict(reverse_marks)
-    for i in reverse_marks:
-      print "%s\t%s\t%s\t%s" % ('r',i[0],i[1][0],i[1][1])
+    #reverse_marks=sortdict(reverse_marks)
+    #for i in reverse_marks:
+    #  print "%s\t%s\t%s\t%s" % ('r',i[0],i[1][0],i[1][1])
   
 
