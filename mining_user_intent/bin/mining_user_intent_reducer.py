@@ -23,6 +23,7 @@ class Query:
     self.query=''
     self.click=0
     self.search=0
+
 def sort_list(llist):
   result={}
   for query in llist:
@@ -40,6 +41,7 @@ def sort_list(llist):
       result[query_str]['user']+=1
 
   return sorted(result.iteritems(), key=lambda x:(-x[1]['user'],-x[1]['click'],-x[1]['search']))
+
 def output_session(session):
   global first_item_count
   global whole_sessions
@@ -48,7 +50,7 @@ def output_session(session):
   whole_sessions.append({"session":session,"counts":first_item_count})
 
 def fscore(m1,m2):
-  return 2*m1*m1/float((m1+m2))
+  return m1/float(m2)
 
 def merge(str1):
   global current_session
@@ -87,13 +89,22 @@ if __name__=='__main__':
   whole_sessions.sort(cmp=lambda x,y: cmp(x['counts'],y['counts']),reverse=True)
   for i in whole_sessions:
     processed=i['session'].items()[0][1]
-    print i['session'].items()[0][0],i['counts']
-    processed=i['session'].items()[0][1]
     p_order=sort_list(processed)
+    flag=True
+    counter=0
     for pi in p_order:
-      if pi[1]['user']<2 or pi[1]['click']<2:
+      if len(pi[0])<len(i['session'].items()[0][0])*0.8:
+        continue
+      elif pi[1]['user']<3 or pi[1]['click']<5:
         continue
       else:
+        if flag:
+          print i['session'].items()[0][0],i['counts']
+          flag=False
         print "===>",pi[0],pi[1]['user'],pi[1]['click'],pi[1]['search'],fscore(pi[1]['click'],pi[1]['search'])
-    print "---"*20
+        counter+=1
+      if counter>40:
+        break
+    if flag==False:
+      print "---"*20
 
