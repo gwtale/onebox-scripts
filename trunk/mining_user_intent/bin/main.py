@@ -69,7 +69,7 @@ if __name__ == "__main__":
           " -file " + binpath + "mining_user_intent_reducer.py " + \
           " -jobconf mapred.min.split.size=%d " %(1000*1000*1000) + \
           " -file " + confpath + "config.py"  + \
-          " -jobconf mapred.reduce.tasks=50 " + \
+          " -jobconf mapred.reduce.tasks=10 " + \
           " -jobconf mapred.job.name=\"mining_user_intent_"+today+"\""  +\
           " -jobconf mapred.job.priority=NORMAL" +\
           " -cacheArchive 'hdfs://n01.dong.shgt.qihoo.net:9000/user/yuebin/suffixtree.tar.gz#suffixtree' "

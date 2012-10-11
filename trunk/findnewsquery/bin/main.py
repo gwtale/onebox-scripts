@@ -64,7 +64,7 @@ if __name__ == "__main__":
           " -file " + binpath +"findnewsquery_mapper.py " + \
           " -file " + binpath + "findnewsquery_reducer.py " + \
           " -file " + confpath + "config.py"  + \
-          " -jobconf mapred.reduce.tasks=20 " + \
+          " -jobconf mapred.reduce.tasks=12 " + \
           " -jobconf mapred.job.name=\"find_news_query_"+today+"\" "  +\
           " -jobconf mapred.job.priority=NORMAL" +\
           " -cacheArchive 'hdfs://n01.dong.shgt.qihoo.net:9000/user/yuebin/suffixtree.tar.gz#suffixtree' "
