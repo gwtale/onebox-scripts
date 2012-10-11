@@ -136,6 +136,19 @@ def calc_increase_rate(word,data):
       else:
         if DEBUG:
           print "increase -,in two days"
+        if len(data)>2:
+          max_before=max(data[:len(data)-2])
+          if query_counts_last>max_before:
+            fake_rate=(query_counts_last-max_before)/max_before
+          else:
+            fake_rate=(query_counts_last-max_before)/query_counts_last
+        else:
+          fake_rate=2
+        if fake_rate<0.9:
+          if DEBUG:
+            print "fake increase,downgrade the marks"
+          FAKE_INC=True
+
         inc_rate_tmp.append(math.pow(2,(i+1))*rate)
     else:
       if i < len(data)-2:
