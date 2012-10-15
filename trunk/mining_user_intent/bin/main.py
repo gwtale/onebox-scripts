@@ -72,7 +72,7 @@ if __name__ == "__main__":
           " -jobconf mapred.reduce.tasks=10 " + \
           " -jobconf mapred.job.name=\"mining_user_intent_"+today+"\""  +\
           " -jobconf mapred.job.priority=NORMAL" +\
-          " -cacheArchive 'hdfs://n01.dong.shgt.qihoo.net:9000/user/yuebin/suffixtree.tar.gz#suffixtree' "
+          " -cacheArchive '/user/yuebin/suffixtree.tar.gz#suffixtree' "
   print command
   ret = config.run_hadoop_retry(command,OUTPUT_PATH)
   if ret!=0:
