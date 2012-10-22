@@ -48,17 +48,9 @@ def merge(str1):
   items=str1.split('\t')
   if len(items)!=13:
     return
-  if items[3] != 'ck' or items[5]=='-' or items[5].find('http') ==-1:
+  if items[6]!='-1' or len(items[2])>100 or items[3] != 'ck' or items[5]=='-' or items[5].find('http') ==-1:
     return
-  if items[5] in sessions:
-    if items[2] in sessions[items[5]]:
-      sessions[items[5]][items[2]]+=1
-    else:
-      sessions[items[5]][items[2]]=1
-  else:
-    sessions[items[5]]={}
-    sessions[items[5]][items[2]]=1
- 
+  print "%s\t%s" %(items[5],items[2]) 
 if __name__=="__main__":
   while True :
     try:
@@ -68,5 +60,3 @@ if __name__=="__main__":
       break
 
   merge("\t")
-  for s in sessions:
-    print "%s\t%s" %(s,sessions[s])
