@@ -45,5 +45,5 @@ if __name__=='__main__':
       limit+=1
       if limit>50:
         break
-      print i,sessions[s][i]
+      print i[0],i[1]
     print "="*40
