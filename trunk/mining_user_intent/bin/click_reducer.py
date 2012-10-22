@@ -41,7 +41,8 @@ if __name__=='__main__':
     if len(sessions[s])<5:
       continue
     limit=0
-    for i in sorted(sessions[s],reverse=True):
+    tmp=sorted(sessions[s].iteritems(),key=lambda x:(-x[1]))
+    for i in tmp:
       limit+=1
       if limit>50:
         break
