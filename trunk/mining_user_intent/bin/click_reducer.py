@@ -38,8 +38,12 @@ if __name__=='__main__':
     except EOFError:
       break
   for s in sessions:
-    if len(sessions[s])<2:
+    if len(sessions[s])<5:
       continue
-    print s
-    for i in sessions[s]:
+    limit=0
+    for i in sorted(sessions[s],reverse=True):
+      limit+=1
+      if limit>50:
+        break
       print i,sessions[s][i]
+    print "="*40
