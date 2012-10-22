@@ -69,8 +69,4 @@ if __name__=="__main__":
 
   merge("\t")
   for s in sessions:
-    if len(sessions[s])==1:
-      continue
-    print s
-    for i in sessions[s]:
-      print i,sessions[s][i]
+    print "%s\t%s" %(s,sessions[s])
