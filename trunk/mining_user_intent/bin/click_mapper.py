@@ -47,21 +47,10 @@ def merge(str1):
   global sessions
   items=str1.split('\t')
   if len(items)!=13:
-      #损坏的数据
     return
-  if items[3] != 'ck' or items[5]=='-':
+  if items[6]!='-1' or len(items[2])>100 or items[3] != 'ck' or items[5]=='-' or items[5].find('http') ==-1:
     return
-  if items[5].find('http') ==-1:
-    return 
-  if items[2] in sessions:
-    if items[5] in sessions[items[2]]:
-      sessions[items[2]][items[5]]+=1
-    else:
-      sessions[items[2]][items[5]]=1
-  else:
-    sessions[items[2]]={}
-    sessions[items[2]][items[5]]=1
- 
+  print "%s\t%s" %(items[2],items[5]) 
 if __name__=="__main__":
   while True :
     try:
@@ -71,7 +60,3 @@ if __name__=="__main__":
       break
 
   merge("\t")
-  for s in sessions:
-    print s
-    for i in sessions[s]:
-      print i,sessions[s][i]
