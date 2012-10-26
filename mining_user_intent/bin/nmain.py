@@ -47,7 +47,7 @@ if __name__ == "__main__":
   print 'start day:',today
     
   end = datetime.now()-timedelta(DEBUG_DAY)
-  for i in range(0,1):
+  for i in range(0,100):
     tmp_date=end-timedelta(i)
     TMP_P= " /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/session/ "
     if config.has_hadoop_dir(TMP_P):
@@ -69,7 +69,6 @@ if __name__ == "__main__":
           " -file " + binpath + "r_click_reducer.py " + \
           " -file " + confpath + "config.py"  + \
           " -jobconf mapred.reduce.tasks=10 " + \
-          " -jobconf mapred.map.tasks=500 " + \
           " -jobconf mapred.job.name=\"click_graph_mining_user_intent_"+today+"\""  +\
           " -jobconf mapred.job.priority=NORMAL" +\
           " -cacheArchive '/user/yuebin/suffixtree.tar.gz#suffixtree' "
@@ -77,3 +76,5 @@ if __name__ == "__main__":
   ret = config.run_hadoop_retry(command,OUTPUT_PATH)
   if ret!=0:
     alert("click_graph_mining_user_intent job faild")
+  else:
+    alert("click_graph ok!")
