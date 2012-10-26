@@ -45,8 +45,8 @@ def sort_list(llist):
 def output_session(session):
   global first_item_count
   global whole_sessions
-  if first_item_count==1:
-    return
+  #if first_item_count==1:
+  #  return
   whole_sessions.append({"session":session,"counts":first_item_count})
 
 def fscore(m1,m2):
