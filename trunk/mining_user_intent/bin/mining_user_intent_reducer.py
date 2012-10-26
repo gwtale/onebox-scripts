@@ -50,6 +50,8 @@ def output_session(session):
   whole_sessions.append({"session":session,"counts":first_item_count})
 
 def fscore(m1,m2):
+  if m2==0:
+    m2=1
   return m1/float(m2)
 
 def merge(str1):
@@ -94,8 +96,6 @@ if __name__=='__main__':
     counter=0
     for pi in p_order:
       if len(pi[0])<len(i['session'].items()[0][0])*0.8:
-        continue
-      elif pi[1]['user']<3 or pi[1]['click']<5:
         continue
       else:
         if flag:
