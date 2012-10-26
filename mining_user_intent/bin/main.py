@@ -47,14 +47,14 @@ if __name__ == "__main__":
   print 'start day:',today
     
   end = datetime.now()-timedelta(DEBUG_DAY)
-  for i in range(0,1):
+  for i in range(0,50):
     tmp_date=end-timedelta(i)
     TMP_P= " /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/session/ "
     if config.has_hadoop_dir(TMP_P):
       INPUT_PATH+=TMP_P
-    TMP_P= " /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/one-segsession/ "
-    if config.has_hadoop_dir(TMP_P):
-      INPUT_PATH+=TMP_P
+    #TMP_P= " /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/one-segsession/ "
+    #if config.has_hadoop_dir(TMP_P):
+    #  INPUT_PATH+=TMP_P
 
   OUTPUT_PATH='/user/yuebin/hadoop/mining_user_intent/%s.st' %(today.replace('-',''))
   print "INPUT PATH:",INPUT_PATH
@@ -68,8 +68,7 @@ if __name__ == "__main__":
           " -file " + binpath +"mining_user_intent_mapper.py " + \
           " -file " + binpath + "mining_user_intent_reducer.py " + \
           " -file " + confpath + "config.py"  + \
-          " -jobconf mapred.reduce.tasks=50 " + \
-          " -jobconf mapred.map.tasks=500 " + \
+          " -jobconf mapred.reduce.tasks=10 " + \
           " -jobconf mapred.job.name=\"mining_user_intent_"+today+"\""  +\
           " -jobconf mapred.job.priority=NORMAL" +\
           " -cacheArchive '/user/yuebin/suffixtree.tar.gz#suffixtree' "

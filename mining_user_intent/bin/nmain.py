@@ -64,9 +64,9 @@ if __name__ == "__main__":
           " -input " + INPUT_PATH +\
           " -output  "+ OUTPUT_PATH + \
           " -mapper \" python r_click_mapper.py \"  " + \
-          " -reducer \" python click_reducer.py \" " +\
+          " -reducer \" python r_click_reducer.py \" " +\
           " -file " + binpath +"r_click_mapper.py " + \
-          " -file " + binpath + "click_reducer.py " + \
+          " -file " + binpath + "r_click_reducer.py " + \
           " -file " + confpath + "config.py"  + \
           " -jobconf mapred.reduce.tasks=10 " + \
           " -jobconf mapred.map.tasks=500 " + \
