@@ -38,13 +38,16 @@ if __name__=='__main__':
     except EOFError:
       break
   for s in sessions:
-    if len(sessions[s])<5:
+    if len(sessions[s])<10:
       continue
     limit=0
     tmp=sorted(sessions[s].iteritems(),key=lambda x:(-x[1]))
+    output=""
     for i in tmp:
       limit+=1
       if limit>50:
         break
-      print i[0],i[1]
-    print "="*40
+      output+="%s#%s\t" %(i[0],i[1])
+      #print i[0],i[1]
+    print output
+    #print "="*40
