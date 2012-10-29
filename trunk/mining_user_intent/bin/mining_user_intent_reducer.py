@@ -95,14 +95,22 @@ if __name__=='__main__':
     flag=True
     counter=0
     for pi in p_order:
-      if len(pi[0])<len(i['session'].items()[0][0])*0.8:
-        continue
+      if len(pi[0].split())>len(i['session'].items()[0][0].split()):
+        #限定变多
+        pass  
+      elif len(pi[0].split())==len(i['session'].items()[0][0].split()):
+        #限定一样
+        if len(pi[0])<len(i['session'].items()[0][0])*0.45:
+          continue
       else:
-        if flag:
-          print i['session'].items()[0][0],i['counts']
-          flag=False
-        print "===>",pi[0],pi[1]['user'],pi[1]['click'],pi[1]['search'],fscore(pi[1]['click'],pi[1]['search'])
-        counter+=1
+        #限定变少
+        pass
+      if flag:
+        print i['session'].items()[0][0],i['counts']
+        flag=False
+      print "===>",pi[0],pi[1]['user'],pi[1]['click'],pi[1]['search'],fscore(pi[1]['click'],pi[1]['search'])
+      counter+=1
+ 
       if counter>40:
         break
     if flag==False:

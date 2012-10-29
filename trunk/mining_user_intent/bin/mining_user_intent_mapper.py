@@ -37,7 +37,7 @@ regx_alphabet=re.compile(alphabet_str)
 number_and_alphabet=ur"[0-9]{1,100}[a-zA-Z]{1,100}"
 regx_number_and_alphabet=re.compile(number_and_alphabet)
 
-query_items_str=ur"[\u4e00-\u9fa5]+|[0-9a-zA-Z]+"
+query_items_str=ur"[\u4e00-\u9fa5]+|[.0-9a-zA-Z]+"
 regx_query_items_str=re.compile(query_items_str)
 
 
@@ -55,7 +55,7 @@ def merge(str1):
     current_list=[]
     current_session={}
   else:
-    items=str1.split('\t')
+    items=str1.lower().split('\t')
     if len(items)!=13:
       #损坏的数据
       return
@@ -228,7 +228,7 @@ def query_list_similarity(str1,result_list):
   poses=[]
   
   for i in range(len(result_list)):
-    for j in result_list[i]:
+      j = result_list[i][0]
       result,mark=query_similarity(str1,j['query']) 
       if mark==-1:
         break 
