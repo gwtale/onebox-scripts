@@ -102,6 +102,8 @@ def all_chinese(str1):
 def query_similarity(str1,str2):
   if str1=='' or str2 =='':
     return False,0
+  if str1.find(str2)!=-1 or str2.find(str1)!=-1:
+    return True,1
   try:
     str1_list=regx_chinese_or_number_or_alphabet.findall(str1)
     str2_list=regx_chinese_or_number_or_alphabet.findall(str2)
