@@ -52,7 +52,7 @@ if __name__ == "__main__":
     TMP_P=" /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/querylog.st/ "
     if config.has_hadoop_dir(TMP_P):
       INPUT_PATH+=TMP_P
-  OUTPUT_PATH='/user/yuebin/hadoop/findnewsquery/%s.st' %(today.replace('-',''))
+  OUTPUT_PATH='/user/yuebin/hadoop/recurrent_query_mining/%s.st' %(today.replace('-',''))
   print "INPUT PATH:",INPUT_PATH
   print "OUTPUT PATH",OUTPUT_PATH
   ret = 0
@@ -65,10 +65,10 @@ if __name__ == "__main__":
           " -file " + binpath + "findnewsquery_reducer.py " + \
           " -file " + confpath + "config.py"  + \
           " -jobconf mapred.reduce.tasks=12 " + \
-          " -jobconf mapred.job.name=\"find_news_query_"+today+"\" "  +\
+          " -jobconf mapred.job.name=\"recurrent_query_mining_"+today+"\" "  +\
           " -jobconf mapred.job.priority=NORMAL" +\
           " -cacheArchive '/user/yuebin/suffixtree.tar.gz#suffixtree' "
   print command
   ret = config.run_hadoop_retry(command,OUTPUT_PATH)
   if ret!=0:
-    alert("findnewsquery job faild")
+    alert("recurrent query job failed")
