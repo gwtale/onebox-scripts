@@ -47,7 +47,7 @@ if __name__ == "__main__":
   print 'start day:',today
     
   end = datetime.now()-timedelta(DEBUG_DAY)
-  for i in range(0,9):
+  for i in range(0,100):
     tmp_date=end-timedelta(i)
     TMP_P=" /user/hehaitao/clickmodel/"+str(tmp_date).split(' ')[0].replace('-','')+"/querylog.st/ "
     if config.has_hadoop_dir(TMP_P):
@@ -59,10 +59,10 @@ if __name__ == "__main__":
   command =  hadoop_home_path+"/bin/hadoop jar " + hadoop_streaming_file + \
           " -input " + INPUT_PATH +\
           " -output  "+ OUTPUT_PATH + \
-          " -mapper \" python findnewsquery_mapper.py \"  " + \
-          " -reducer \" python findnewsquery_reducer.py "+ str(DEBUG_DAY)+" \" " +\
-          " -file " + binpath +"findnewsquery_mapper.py " + \
-          " -file " + binpath + "findnewsquery_reducer.py " + \
+          " -mapper \" python recurrent_query_mapper.py \"  " + \
+          " -reducer \" python recurrent_query_reducer.py "+ str(DEBUG_DAY)+" \" " +\
+          " -file " + binpath +"recurrent_query_mapper.py " + \
+          " -file " + binpath + "recurrent_query_reducer.py " + \
           " -file " + confpath + "config.py"  + \
           " -jobconf mapred.reduce.tasks=12 " + \
           " -jobconf mapred.job.name=\"recurrent_query_mining_"+today+"\" "  +\
